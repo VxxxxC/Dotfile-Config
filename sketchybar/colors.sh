@@ -1,19 +1,44 @@
 #!/bin/bash
 
-# Tokyonight (night) color scheme for Sketchybar
-# Use https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
+export WHITE=0xffffffff
 
-export COLOR_TRANSPARENT="0x00000000"
+# -- Teal Scheme --
+export BAR_COLOR=0xff001f30
+export ITEM_BG_COLOR=0xff003547
+export ACCENT_COLOR=0xff2cf9ed
 
-export COLOR_FOREGROUND="0xffa9b1dc" #"#a9b1dc"
-export COLOR_BACKGROUND="0xb0001a1b" #"#1a1b2c" but 69% transparent
+# -- Gray Scheme --
+# export BAR_COLOR=0xff101314
+# export ITEM_BG_COLOR=0xff353c3f
+# export ACCENT_COLOR=0xffffffff
 
-export COLOR_BLACK="0xff414868" #"#414868"
-export COLOR_RED="0xfff7768e" #f7768e"
-export COLOR_GREEN="0xff73daca" #"#73daca"
-export COLOR_YELLOW="0xffe0af68" #"#e0af68"
-export COLOR_BLUE="0xff7aa2f7" #"#7aa2f7"
-export COLOR_PURPLE="0xffbb9af7" #"#bb9af7"
-export COLOR_CYAN="0xff7dcfff" #"#7dcfff"
-export COLOR_WHITE="0xffc0caf5" #"#c0caf5"
+# -- Purple Scheme --
+# export BAR_COLOR=0xff140c42
+# export ITEM_BG_COLOR=0xff2b1c84
+# export ACCENT_COLOR=0xffeb46f9
 
+# -- Red Scheme ---
+# export BAR_COLOR=0xff23090e
+# export ITEM_BG_COLOR=0xff591221
+# export ACCENT_COLOR=0xffff2453
+
+# -- Blue Scheme --- 
+# export BAR_COLOR=0xff021254
+# export ITEM_BG_COLOR=0xff093aa8
+# export ACCENT_COLOR=0xff15bdf9
+
+# -- Green Scheme --
+# export BAR_COLOR=0xff003315
+# export ITEM_BG_COLOR=0xff008c39
+# export ACCENT_COLOR=0xff1dfca1
+
+
+# -- Orange Scheme --
+# export BAR_COLOR=0xff381c02
+# export ITEM_BG_COLOR=0xff99440a
+# export ACCENT_COLOR=0xfff97716
+
+# -- Yellow Scheme --
+# export BAR_COLOR=0xff2d2b02
+# export ITEM_BG_COLOR=0xff8e7e0a
+# export ACCENT_COLOR=0xfff7fc17
