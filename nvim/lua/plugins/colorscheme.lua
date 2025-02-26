@@ -9,4 +9,10 @@ return {
       vim.cmd.colorscheme("sonokai")
     end,
   },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "sonokai",
+    },
+  },
 }
