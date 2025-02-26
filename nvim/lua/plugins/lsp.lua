@@ -150,9 +150,9 @@ return {
         end,
       },
     },
-    --@class PluginLspOpts
+    --- @class PluginLspOpts
     opts = {
-      -- @type vim.diagnostic.config
+      --- @type vim.diagnostic.config
       diagnostics = {
         virtual_text = {
           spacing = 4,
