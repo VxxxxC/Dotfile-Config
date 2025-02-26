@@ -150,9 +150,16 @@ return {
         end,
       },
     },
+    --@class PluginLspOpts
     opts = {
+      -- @type vim.diagnostic.config
       diagnostics = {
-        virtual_text = false,
+        virtual_text = {
+          spacing = 4,
+          source = "if_many",
+          prefix = "●",
+        },
+        underlinder = true,
         update_in_insert = true,
         float = {
           spacing = 4,

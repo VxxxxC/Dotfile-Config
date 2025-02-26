@@ -131,17 +131,3 @@ end
 
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
-
-vim.diagnostic.config({
-  virtual_text = false,
-  signs = true,
-  update_in_insert = true,
-  underline = true,
-  severity_sort = false,
-  float = {
-    border = "rounded",
-    source = "always",
-    header = "",
-    prefix = "",
-  },
-})
