@@ -1,4 +1,4 @@
-theme = "onedark"
+theme = "sonokai"
 
 [editor]
 line-number = "relative"
@@ -35,3 +35,6 @@ display-inlay-hints = true
 
 [keys.normal]
 C-u = "redo"
+tab = ":buffer-next"
+S-tab = ":buffer-previous"
+C-q = ":buffer-close"
