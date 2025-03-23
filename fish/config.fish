@@ -4,7 +4,7 @@ uptime
 
 # nvm
 . ~/.config/fish/conf.d/nvm.fish
-nvm use 18
+nvm use 23
 
 # Change prompt
 # functions -c fish_prompt _old_fish_prompt
