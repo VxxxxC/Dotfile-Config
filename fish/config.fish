@@ -7,13 +7,13 @@ uptime
 nvm use 18
 
 # Change prompt
-functions -c fish_prompt _old_fish_prompt
-function fish_prompt
-    if set -q VIRTUAL_ENV
-        echo -n -s (set_color -b blue white) "(" (basename "$VIRTUAL_ENV") ")" (set_color normal) " "
-    end
-    _old_fish_prompt
-end
+# functions -c fish_prompt _old_fish_prompt
+# function fish_prompt
+#     if set -q VIRTUAL_ENV
+#         echo -n -s (set_color -b blue white) "(" (basename "$VIRTUAL_ENV") ")" (set_color normal) " "
+#     end
+#     _old_fish_prompt
+# end
 
 #This is oh-my-posh theme init when starting up fish shell
 eval "$(oh-my-posh init fish --config $(brew --prefix oh-my-posh)/themes/kushal.omp.json)"
@@ -53,3 +53,7 @@ end
 
 # Created by `pipx` on 2025-01-08 15:26:21
 set PATH $PATH /Users/vxxxxc/.local/bin
+
+# change Python version on local project by pyenv
+export PATH="/Users/vxxxxc/.pyenv/shims:$PATH"
+eval "$(pyenv init --path)"
