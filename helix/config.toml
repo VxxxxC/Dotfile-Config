@@ -42,3 +42,4 @@ tab = ":buffer-next"
 S-tab = ":buffer-previous"
 C-q = ":buffer-close"
 C-g = [":new", ":insert-output lazygit", ":buffer-close", ":redraw"]
+C-f = ":sh tmux new-window -n fx '~/.config/helix/yazi-picker.sh open'"
