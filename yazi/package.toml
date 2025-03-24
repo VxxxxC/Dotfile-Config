@@ -1,5 +1,39 @@
-[plugin]
-deps = [{ use = "dedukun/relative-motions", rev = "d8dd68f" }, { use = "yazi-rs/plugins:jump-to-char", rev = "ad52adf" }, { use = "yazi-rs/plugins:full-border", rev = "ad52adf" }, { use = "Ape/mediainfo", rev = "c69314e" }, { use = "Tyarel8/video-ffmpeg", rev = "fe26a18" }]
+[[plugin.deps]]
+use = "dedukun/relative-motions"
+rev = "d8dd68f"
+hash = "3be8cba2f59828a3f9b159d8601d49d"
 
-[flavor]
-deps = [{ use = "bennyyip/gruvbox-dark", rev = "c204853" }]
+[[plugin.deps]]
+use = "yazi-rs/plugins:jump-to-char"
+rev = "ad52adf"
+hash = "72c66a0b3d60f8377eb9db5e1d8b60b2"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:full-border"
+rev = "ad52adf"
+hash = "3a73613fc702a5f8369791b3401f52f1"
+
+[[plugin.deps]]
+use = "Ape/mediainfo"
+rev = "c69314e"
+hash = ""
+
+[[plugin.deps]]
+use = "Tyarel8/video-ffmpeg"
+rev = "fe26a18"
+hash = ""
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "2730199"
+hash = "7918aab6a71caf31b58411f789195677"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "2730199"
+hash = "e0d2c8d7e7afe5b82270367098d1a821"
+
+[[flavor.deps]]
+use = "bennyyip/gruvbox-dark"
+rev = "c204853"
+hash = "d4912e836c8c2b1628d840764a4991d8"
