@@ -43,6 +43,7 @@ if type -q l
 end
 
 alias v nvim
+alias h hx
 alias g git
 alias python python3
 alias pip pip3
