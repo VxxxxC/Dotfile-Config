@@ -1,118 +1,25 @@
-# Fish
-[[language]]
-name = "fish"
-formatter = { command = "fish_indend" }
-auto-format = true
+[language-server]
+vuels = { command = "vue-language-server", args = [
+  "--stdio",
+], config = { typescript = { tsdk = "node_modules/typescript/lib/" } } }
 
-# Shell Script / Bash
-[[language]]
-name = "bash"
-scope = "source.bash"
-injection-regex = "(shell|bash|zsh|sh)"
-file-types = [
-  "sh",
-  "bash",
-  "ash",
-  "dash",
-  "ksh",
-  "mksh",
-  "zsh",
-  "zshenv",
-  "zlogin",
-  "zlogout",
-  "zprofile",
-  "zshrc",
-  "eclass",
-  "ebuild",
-  "bazelrc",
-  "Renviron",
-  "zsh-theme",
-  "cshrc",
-  "tcshrc",
-  "bashrc_Apple_Terminal",
-  "zshrc_Apple_Terminal",
-  { glob = "i3/config" },
-  { glob = "sway/config" },
-  { glob = "tmux.conf" },
-  { glob = ".bash_history" },
-  { glob = ".bash_login" },
-  { glob = ".bash_logout" },
-  { glob = ".bash_profile" },
-  { glob = ".bashrc" },
-  { glob = ".profile" },
-  { glob = ".zshenv" },
-  { glob = ".zlogin" },
-  { glob = ".zlogout" },
-  { glob = ".zprofile" },
-  { glob = ".zshrc" },
-  { glob = ".zimrc" },
-  { glob = "APKBUILD" },
-  { glob = ".bash_aliases" },
-  { glob = ".Renviron" },
-  { glob = ".xprofile" },
-  { glob = ".xsession" },
-  { glob = ".xsessionrc" },
-  { glob = ".yashrc" },
-  { glob = ".yash_profile" },
-  { glob = ".hushlogin" },
-]
-shebangs = ["sh", "bash", "dash", "zsh"]
-comment-token = "#"
-language-servers = ["bash-language-server"]
-indent = { tab-width = 2, unit = "  " }
 
-[[grammar]]
-name = "bash"
-source = { git = "https://github.com/tree-sitter/tree-sitter-bash", rev = "f8fb3274f72a30896075585b32b0c54cad65c086" }
+[language-server.astro-ls]
+command = "astro-ls"
+args = ["--stdio"]
+config = { typescript = { tsdk = "node_modules/typescript/lib" } }
 
-# Rust
 [language-server.rust-analyzer]
 command = "rust-analyzer"
 
-# [language-server.rust-analyzer.config]
-# inlayHints.bindingModeHints.enable = false
-# inlayHints.closingBraceHints.minLines = 10
-# inlayHints.closureReturnTypeHints.enable = "with_block"
-# inlayHints.discriminantHints.enable = "fieldless"
-# inlayHints.lifetimeElisionHints.enable = "skip_trivial"
-# inlayHints.typeHints.hideClosureInitialization = false
+[language-server.rust-analyzer.config]
+inlayHints.bindingModeHints.enable = false
+inlayHints.closingBraceHints.minLines = 10
+inlayHints.closureReturnTypeHints.enable = "with_block"
+inlayHints.discriminantHints.enable = "fieldless"
+inlayHints.lifetimeElisionHints.enable = "skip_trivial"
+inlayHints.typeHints.hideClosureInitialization = false
 
-[language-server.rust-analyzer.config.check]
-command = "clippy"
-
-[language-server.rust-analyzer.config.cargo]
-features = "all"
-
-
-[[language]]
-name = "rust"
-scope = "source.rust"
-injection-regex = "rs|rust"
-file-types = ["rs"]
-roots = ["Cargo.toml", "Cargo.lock"]
-shebangs = ["rust-script", "cargo"]
-auto-format = true
-comment-tokens = ["//", "///", "//!"]
-block-comment-tokens = [
-  { start = "/*", end = "*/" },
-  { start = "/**", end = "*/" },
-  { start = "/*!", end = "*/" },
-]
-language-servers = ["rust-analyzer"]
-indent = { tab-width = 4, unit = "    " }
-persistent-diagnostic-sources = ["rustc", "clippy"]
-formatter = { command = "bash", args = ["-c", "rustfmt | dx fmt -f -"] }
-
-[[grammar]]
-name = "rust"
-source = { git = "https://github.com/tree-sitter/tree-sitter-rust", rev = "1f63b33efee17e833e0ea29266dd3d713e27e321" }
-
-# Tailwindcss
-[language-server.tailwindcss-ls]
-command = "tailwindcss-language-server"
-args = ["--stdio"]
-
-# Javascript / Typescript
 [language-server.typescript-language-server]
 command = "typescript-language-server"
 args = ["--stdio"]
@@ -136,27 +43,52 @@ includeInlayParameterNameHintsWhenArgumentMatchesName = true
 includeInlayPropertyDeclarationTypeHints = true
 includeInlayVariableTypeHints = true
 
-
-# Astro
-[language-server.astro-ls]
-command = "astro-ls"
+[language-server.svelteserver]
+command = "svelteserver"
 args = ["--stdio"]
-config = { typescript = { tsdk = "node_modules/typescript/lib" } }
+
+[language-server.svelteserver.config.configuration.typescript]
+inlayHints.parameterTypes.enabled = true
+inlayHints.variableTypes.enabled = true
+inlayHints.propertyDeclarationTypes.enabled = true
+inlayHints.functionLikeReturnTypes.enabled = true
+inlayHints.enumMemberValues.enabled = true
+inlayHints.parameterNames.enabled = "all"
+
+[language-server.svelteserver.config.configuration.javascript]
+inlayHints.parameterTypes.enabled = true
+inlayHints.variableTypes.enabled = true
+inlayHints.propertyDeclarationTypes.enabled = true
+inlayHints.functionLikeReturnTypes.enabled = true
+inlayHints.enumMemberValues.enabled = true
+inlayHints.parameterNames.enabled = "all"
 
 [[language]]
-name = "astro"
-formatter = { command = "prettier", args = [
-  "--plugin",
-  "prettier-plugin-astro",
-  "--parser",
-  "astro",
-] }
+name = "rust"
+scope = "source.rust"
+injection-regex = "rs|rust"
+file-types = ["rs"]
+roots = ["Cargo.toml", "Cargo.lock"]
+shebangs = ["rust-script", "cargo"]
 auto-format = true
+comment-tokens = ["//", "///", "//!"]
+block-comment-tokens = [
+  { start = "/*", end = "*/" },
+  { start = "/**", end = "*/" },
+  { start = "/*!", end = "*/" },
+]
+language-servers = ["rust-analyzer"]
+indent = { tab-width = 4, unit = "    " }
+persistent-diagnostic-sources = ["rustc", "clippy"]
+
+[[grammar]]
+name = "rust"
+source = { git = "https://github.com/tree-sitter/tree-sitter-rust", rev = "1f63b33efee17e833e0ea29266dd3d713e27e321" }
 
 [[language]]
 name = "javascript"
 scope = "source.js"
-injection-regex = "js|javascript"
+injection-regex = "(js|javascript)"
 language-id = "javascript"
 file-types = [
   "js",
@@ -174,24 +106,10 @@ comment-token = "//"
 block-comment-tokens = { start = "/*", end = "*/" }
 language-servers = ["typescript-language-server"]
 indent = { tab-width = 2, unit = "  " }
-formatter = { command = 'prettier', args = ["--parser", "typescript"] }
-auto-format = true
 
-
-[[language]]
-name = "typescript"
-scope = "source.ts"
-injection-regex = "ts|typescript"
-language-id = "typescript"
-file-types = ["ts", "mts", "cts"]
-shebangs = ["deno", "bun", "ts-node"]
-roots = ["package.json", "tsconfig.json"]
-comment-token = "//"
-block-comment-tokens = { start = "/*", end = "*/" }
-language-servers = ["typescript-language-server"]
-indent = { tab-width = 2, unit = "  " }
-formatter = { command = 'prettier', args = ["--parser", "typescript"] }
-auto-format = true
+[[grammar]]
+name = "javascript"
+source = { git = "https://github.com/tree-sitter/tree-sitter-javascript", rev = "f772967f7b7bc7c28f845be2420a38472b16a8ee" }
 
 [[language]]
 name = "jsx"
@@ -202,127 +120,39 @@ file-types = ["jsx"]
 roots = ["package.json"]
 comment-token = "//"
 block-comment-tokens = { start = "/*", end = "*/" }
-language-servers = [
-  "vscode-html-language-server",
-  "typescript-language-server",
-  "tailwindcss-ls",
-]
+language-servers = ["typescript-language-server"]
 indent = { tab-width = 2, unit = "  " }
 grammar = "javascript"
-formatter = { command = 'prettier', args = ["--parser", "typescript"] }
-auto-format = true
 
 [[language]]
-name = "tsx"
-scope = "source.tsx"
-injection-regex = "tsx"
-language-id = "typescriptreact"
-file-types = ["tsx"]
+name = "typescript"
+scope = "source.ts"
+injection-regex = "(ts|typescript)"
+language-id = "typescript"
+file-types = ["ts", "mts", "cts"]
+shebangs = ["deno", "bun", "ts-node"]
 roots = ["package.json", "tsconfig.json"]
 comment-token = "//"
 block-comment-tokens = { start = "/*", end = "*/" }
-language-servers = [
-  "vscode-html-language-server",
-  "typescript-language-server",
-  "tailwindcss-ls",
-]
+language-servers = ["typescript-language-server"]
 indent = { tab-width = 2, unit = "  " }
-formatter = { command = 'prettier', args = ["--parser", "typescript"] }
-auto-format = true
-
-[[grammar]]
-name = "javascript"
-source = { git = "https://github.com/tree-sitter/tree-sitter-javascript", rev = "f772967f7b7bc7c28f845be2420a38472b16a8ee" }
 
 [[grammar]]
 name = "typescript"
 source = { git = "https://github.com/tree-sitter/tree-sitter-typescript", rev = "b1bf4825d9eaa0f3bdeb1e52f099533328acfbdf", subpath = "typescript" }
 
+[[language]]
+name = "tsx"
+scope = "source.tsx"
+injection-regex = "(tsx)"                           # |typescript
+language-id = "typescriptreact"
+file-types = ["tsx"]
+roots = ["package.json", "tsconfig.json"]
+comment-token = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+language-servers = ["typescript-language-server"]
+indent = { tab-width = 2, unit = "  " }
+
 [[grammar]]
 name = "tsx"
 source = { git = "https://github.com/tree-sitter/tree-sitter-typescript", rev = "b1bf4825d9eaa0f3bdeb1e52f099533328acfbdf", subpath = "tsx" }
-
-# Toml
-[[language]]
-name = "toml"
-formatter = { command = "taplo", args = ["fmt", "-"] }
-auto-format = true
-scope = "source.toml"
-injection-regex = "toml"
-file-types = [
-  "toml",
-  { glob = "pdm.lock" },
-  { glob = "poetry.lock" },
-  { glob = "Cargo.lock" },
-  { glob = "uv.lock" },
-]
-comment-token = "#"
-language-servers = ["taplo"]
-indent = { tab-width = 2, unit = "  " }
-
-[[grammar]]
-name = "toml"
-source = { git = "https://github.com/ikatyang/tree-sitter-toml", rev = "7cff70bbcbbc62001b465603ca1ea88edd668704" }
-
-# HTML, CSS
-[[language]]
-name = "css"
-scope = "source.css"
-injection-regex = "css"
-file-types = ["css", "scss"]
-block-comment-tokens = { start = "/*", end = "*/" }
-language-servers = ["vscode-css-language-server", "tailwindcss-ls"]
-formatter = { command = 'prettier', args = ["--parser", "css"] }
-auto-format = true
-indent = { tab-width = 2, unit = "  " }
-
-[[grammar]]
-name = "css"
-source = { git = "https://github.com/tree-sitter/tree-sitter-css", rev = "769203d0f9abe1a9a691ac2b9fe4bb4397a73c51" }
-
-[[language]]
-name = "scss"
-scope = "source.scss"
-injection-regex = "scss"
-file-types = ["scss"]
-block-comment-tokens = { start = "/*", end = "*/" }
-language-servers = ["vscode-css-language-server"]
-formatter = { command = 'prettier', args = ["--parser", "scss"] }
-auto-format = true
-indent = { tab-width = 2, unit = "  " }
-
-[[grammar]]
-name = "scss"
-source = { git = "https://github.com/serenadeai/tree-sitter-scss", rev = "c478c6868648eff49eb04a4df90d703dc45b312a" }
-
-[[language]]
-name = "html"
-scope = "text.html.basic"
-injection-regex = "html"
-file-types = [
-  "html",
-  "htm",
-  "shtml",
-  "xhtml",
-  "xht",
-  "jsp",
-  "asp",
-  "aspx",
-  "jshtm",
-  "volt",
-  "rhtml",
-  "cshtml",
-]
-block-comment-tokens = { start = "<!--", end = "-->" }
-language-servers = [
-  "vscode-html-language-server",
-  "superhtml",
-  "tailwindcss-ls",
-]
-formatter = { command = 'prettier', args = ["--parser", "html"] }
-auto-format = true
-indent = { tab-width = 2, unit = "  " }
-
-[[grammar]]
-name = "html"
-source = { git = "https://github.com/tree-sitter/tree-sitter-html", rev = "29f53d8f4f2335e61bf6418ab8958dac3282077a" }
