@@ -102,6 +102,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       { "antosha417/nvim-lsp-file-operations", config = true },
@@ -140,10 +141,17 @@ return {
           vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
         end
 
-        lspconfig["sourcekit"].setup({
-          capabilities = capabilities,
-          on_attach = on_attach,
-        })
+        local defaultLSPs = {
+          "sourcekit",
+        }
+
+        for _, lsp in ipairs(defaultLSPs) do
+          lspconfig[lsp].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            cmd = lsp == "sourcekit" and { vim.trim(vim.fn.system("xcrun -f sourcekit-lsp")) } or nil,
+          })
+        end
       end,
       {
         "Wansmer/symbol-usage.nvim",
