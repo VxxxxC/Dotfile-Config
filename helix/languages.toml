@@ -156,3 +156,19 @@ indent = { tab-width = 2, unit = "  " }
 [[grammar]]
 name = "tsx"
 source = { git = "https://github.com/tree-sitter/tree-sitter-typescript", rev = "b1bf4825d9eaa0f3bdeb1e52f099533328acfbdf", subpath = "tsx" }
+
+
+[[language]]
+name = "solidity"
+scope = "source.sol"
+injection-regex = "(sol|solidity)"
+file-types = ["sol"]
+comment-token = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+indent = { tab-width = 4, unit = "    " }
+language-servers = [ "solc" ]
+
+[[grammar]]
+name = "solidity"
+source = { git = "https://github.com/JoranHonig/tree-sitter-solidity", rev = "f7f5251a3f5b1d04f0799b3571b12918af177fc8" }
+
