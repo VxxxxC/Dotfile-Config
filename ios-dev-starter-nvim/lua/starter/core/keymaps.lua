@@ -7,22 +7,12 @@ end
 
 local keymap = vim.keymap -- for conciseness
 
--- Neovim
-keymap.set("n", "<esc>", "<cmd>nohl<cr>")
-keymap.set("n", "<C-q>", "<cmd>qa!<CR>", { desc = "Close Neovim" })
-keymap.set("n", "<leader>w", "<cmd>wa<CR>", { desc = "Save Changes" })
+local opts = { noremap = true, silent = true }
 
 -- disable updating register for x and c
 keymap.set("n", "x", '"_x')
 keymap.set("n", "c", '"_c')
 keymap.set("n", "C", '"_C')
-
--- window management
-keymap.set("n", "<C-l>", "<C-w>l", { desc = "Change window to right" })
-keymap.set("n", "<C-h>", "<C-w>h", { desc = "Change window to left" })
-keymap.set("n", "<C-j>", "<C-w>j", { desc = "Change window to bottom" })
-keymap.set("n", "<C-k>", "<C-w>k", { desc = "Change window to top" })
-keymap.set("n", "<C-x>", "<cmd>close<CR>", { desc = "Close current split" })
 
 -- splits management
 keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
@@ -73,3 +63,47 @@ keymap.set("n", "<A-s>", "<cmd>silent cc | silent cp<cr>zz", { desc = "Jump to p
 keymap.set("n", "<leader>mm", "<cmd>messages<cr>", { desc = "Show messages" })
 keymap.set("n", "}", '<cmd>execute "keepjumps norm! }"<cr>', { desc = "Next Paragraph" })
 keymap.set("n", "{", '<cmd>execute "keepjumps norm! {"<cr>', { desc = "Previous Paragraph" })
+
+-- Increment/decrement
+keymap.set("n", "+", "<C-a>")
+keymap.set("n", "-", "<C-x>")
+
+-- Delete a word backwards
+keymap.set("n", "dw", 'vb"_d')
+
+-- Select all
+keymap.set("n", "<C-a>", "gg<S-v>G")
+
+-- Save with root permission (not working for now)
+--vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})
+
+-- Disable continuations
+-- keymap.set("n", "<Leader>o", "o<Esc>^Da", opts)
+-- keymap.set("n", "<Leader>O", "O<Esc>^Da", opts)
+
+-- Jumplist
+keymap.set("n", "<C-m>", "<C-i>", opts)
+
+-- New tab
+keymap.set("n", "<leader><tab>", "<cmd>tabnew<CR>", { desc = "Open new tab" }, opts)
+keymap.set("n", "<tab>", ":tabnext<Return>", { desc = "next tab" }, opts)
+keymap.set("n", "<s-tab>", ":tabprev<Return>", { desc = "prev tab" }, opts)
+-- Split window
+keymap.set("n", "ss", ":split<Return>", opts)
+keymap.set("n", "sv", ":vsplit<Return>", opts)
+-- Move window
+keymap.set("n", "sh", "<C-w>h")
+keymap.set("n", "sk", "<C-w>k")
+keymap.set("n", "sj", "<C-w>j")
+keymap.set("n", "sl", "<C-w>l")
+
+-- Resize window
+keymap.set("n", "<C-w><left>", "<C-w><")
+keymap.set("n", "<C-w><right>", "<C-w>>")
+keymap.set("n", "<C-w><up>", "<C-w>+")
+keymap.set("n", "<C-w><down>", "<C-w>-")
+
+-- Diagnostics
+keymap.set("n", "<C-j>", function()
+  vim.diagnostic.goto_next()
+end, opts)
