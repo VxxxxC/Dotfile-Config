@@ -48,6 +48,7 @@ alias g git
 alias python python3
 alias pip pip3
 alias xcode "open -a Xcode"
+alias svim "NVIM_APPNAME=ios-dev-starter-nvim nvim"
 
 if type -q fzf
     alias fzf "fzf --preview 'cat {}' --margin 5% --padding 5% --border"
