@@ -6,7 +6,6 @@ return {
       {
         "williamboman/mason.nvim",
         "mfussenegger/nvim-dap-python",
-        "wojciech-kulik/xcodebuild.nvim",
         keys = {
           {
             "<leader>dPt",
@@ -39,13 +38,6 @@ return {
       },
     },
     opts = function()
-      local xcodebuild = require("xcodebuild.integrations.dap")
-
-      -- TODO: change it to your local codelldb path
-      local codelldbPath = os.getenv("/Users/vxxxxc/.codelldb/codelldb-darwin-arm64/extension/adapter/codelldb") -- "/tools/codelldb-aarch64-darwin/extension/adapter/codelldb"
-
-      xcodebuild.setup(codelldbPath)
-
       local dap = require("dap")
       if not dap.adapters["pwa-node"] then
         require("dap").adapters["pwa-node"] = {
