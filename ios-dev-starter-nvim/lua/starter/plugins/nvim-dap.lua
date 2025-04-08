@@ -38,7 +38,7 @@ return {
     local xcodebuild = require("xcodebuild.integrations.dap")
 
     -- TODO: make sure to set path to your codelldb
-    local codelldbPath = os.getenv("HOME") .. "/tools/codelldb-aarch64-darwin/extension/adapter/codelldb"
+    local codelldbPath = os.getenv("$HOME/.codelldb/codelldb-darwin-arm64/extension/adapter/codelldb")
     xcodebuild.setup(codelldbPath)
 
     local define = vim.fn.sign_define
