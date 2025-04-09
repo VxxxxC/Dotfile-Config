@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "icon_theme": "Material Icon Theme",
   "base_keymap": "VSCode",
   "vim_mode": true,
   "ui_font_size": 16,
@@ -14,7 +15,7 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Ayu Mirage"
+    "dark": "Tokyo Night Storm"
   },
   "confirm_quit": true,
   "buffer_font_fallbacks": ["Hack Nerd Font"]
