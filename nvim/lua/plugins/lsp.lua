@@ -180,6 +180,16 @@ return {
       codelens = { enabled = true },
     },
     init = function()
+      local lsp = require("lspconfig")
+      lsp.sourcekit.setup({
+        capabilities = {
+          workspace = {
+            didChangeWatchedFiles = {
+              dynamicRegistration = true,
+            },
+          },
+        },
+      })
       local keys = {
         {
           "gF",
