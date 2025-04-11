@@ -67,3 +67,5 @@ keymap.set("n", "<A-s>", "<cmd>silent cc | silent cp<cr>zz", { desc = "Jump to p
 keymap.set("n", "<leader>mm", "<cmd>messages<cr>", { desc = "Show messages" })
 keymap.set("n", "}", '<cmd>execute "keepjumps norm! }"<cr>', { desc = "Next Paragraph" })
 keymap.set("n", "{", '<cmd>execute "keepjumps norm! {"<cr>', { desc = "Previous Paragraph" })
+keymap.set("n", "<s-h>", "^", opts)
+keymap.set("n", "<s-l>", "$", opts)
