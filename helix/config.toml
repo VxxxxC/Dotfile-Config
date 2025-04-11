@@ -4,6 +4,8 @@ theme = "ao"
 line-number = "relative"
 bufferline = "always"
 mouse = true
+cursorline = true
+cursorcolumn = true
 
 [editor.cursor-shape]
 insert = "bar"
@@ -13,17 +15,30 @@ select = "underline"
 [editor.file-picker]
 hidden = false
 
+# https://docs.helix-editor.com/master/configuration.html#editorsoft-wrap-section
+[editor.soft-wrap]
+enable = true
+# wrap-at-text-width = true
+wrap-indicator = "↩ "
+
+### https://docs.helix-editor.com/master/configuration.html#editorwhitespace-section
+[editor.whitespace.render]
+space = "all"
+tab = "all"
+newline = "none"
+
+[editor.whitespace.characters]
+space = " "
+nbsp = "⍽"    # Non Breaking SPace
+tab = "→"
+newline = "⏎"
+tabpad = "·"  # Tabs will look like "→···" (depending on tab width)
+### 
+
 [editor.statusline]
-# left = ["mode", "spinner"]
-# center = ["file-name"]
-# right = [
-#   "diagnostics",
-#   "selections",
-#   "position",
-#   "file-encoding",
-#   "file-line-ending",
-#   "file-type",
-# ]
+left = ["mode", "spinner", "diagnostics"]
+center = ["file-name", "separator", "version-control", "separator"]
+right = ["position", "position-percentage", "total-line-numbers"]
 separator = "│"
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
