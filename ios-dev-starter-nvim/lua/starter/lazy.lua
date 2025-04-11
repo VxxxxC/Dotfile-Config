@@ -14,6 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   { import = "starter.plugins" },
+  { "wakatime/vim-wakatime", lazy = false },
 }, {
   checker = {
     enabled = true,
