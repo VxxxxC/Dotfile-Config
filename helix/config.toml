@@ -65,3 +65,5 @@ V = ["goto_line_start", "select_mode", "goto_line_end"]
 "K" = "hover"
 C-k = "keep_selections"
 C-s = ":w"
+S-h = "goto_line_start"
+S-l = "goto_line_end"
