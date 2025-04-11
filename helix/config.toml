@@ -62,3 +62,6 @@ D = ["goto_line_start", "select_mode", "goto_line_end", "delete_selection"]
 S-a = "select_all"
 V = ["goto_line_start", "select_mode", "goto_line_end"]
 "g" = { "e" = "goto_file_end" }
+"K" = "hover"
+C-k = "keep_selections"
+C-s = ":w"
