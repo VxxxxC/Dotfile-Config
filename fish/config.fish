@@ -26,6 +26,16 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
 
+# Yazi shell wrapper
+function y
+    set tmp (mktemp -t "yazi-cwd.XXXXXX")
+    yazi $argv --cwd-file="$tmp"
+    if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+        builtin cd -- "$cwd"
+    end
+    rm -f -- "$tmp"
+end
+
 # Add rubygems to the path
 export PATH="/opt/homebrew/lib/ruby/gems/2.7.0/bin:$PATH"
 # or
