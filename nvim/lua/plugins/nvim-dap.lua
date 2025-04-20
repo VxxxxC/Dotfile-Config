@@ -38,7 +38,20 @@ return {
       },
     },
     opts = function()
-      local dap = require("dap")
+      local dap, dapui = require("dap"), require("dapui")
+      dap.listeners.before.attach.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.launch.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated.dapui_config = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited.dapui_config = function()
+        dapui.close()
+      end
+
       if not dap.adapters["pwa-node"] then
         require("dap").adapters["pwa-node"] = {
           type = "server",
