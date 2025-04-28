@@ -1,7 +1,14 @@
-[language-server]
-vuels = { command = "vue-language-server", args = [
-  "--stdio",
-], config = { typescript = { tsdk = "node_modules/typescript/lib/" } } }
+[[language-server.json-ls]]
+command = "vscode-json-language-server"
+args = ["--stdio"]
+
+[[language-server.toml-ls]]
+command = "taplo"
+args = ["fmt", "-"]
+
+[[language-server.yaml-ls]]
+command = "yaml-language-server"
+args = ["--stdio"]
 
 [language-server.tailwindcss-ls]
 command = "tailwindcss-language-server"
@@ -89,6 +96,19 @@ name = "rust"
 source = { git = "https://github.com/tree-sitter/tree-sitter-rust", rev = "1f63b33efee17e833e0ea29266dd3d713e27e321" }
 
 [[language]]
+name = "json"
+language-servers = ["json-ls"]
+
+[[language]]
+name = "toml"
+auto-format = true
+language-servers = ["toml-ls"]
+
+[[language]]
+name = "yaml"
+language-servers = ["yaml-ls"]
+
+[[language]]
 name = "astro"
 auto-format = true
 language-servers = ["astro-ls", "typescript-language-server", "tailwindcss-ls"]
@@ -158,53 +178,25 @@ file-types = ["tsx"]
 roots = ["package.json", "tsconfig.json"]
 comment-token = "//"
 block-comment-tokens = { start = "/*", end = "*/" }
-language-servers = ["typescript-language-server"]
+language-servers = ["typescript-language-server", "tailwindcss-ls"]
 indent = { tab-width = 2, unit = "  " }
 
 [[grammar]]
 name = "tsx"
 source = { git = "https://github.com/tree-sitter/tree-sitter-typescript", rev = "b1bf4825d9eaa0f3bdeb1e52f099533328acfbdf", subpath = "tsx" }
 
-
-[[language]]
-name = "solidity"
-scope = "source.sol"
-injection-regex = "(sol|solidity)"
-file-types = ["sol"]
-comment-token = "//"
-block-comment-tokens = { start = "/*", end = "*/" }
-indent = { tab-width = 4, unit = "    " }
-language-servers = ["solc"]
-
-[[grammar]]
-name = "solidity"
-source = { git = "https://github.com/JoranHonig/tree-sitter-solidity", rev = "f7f5251a3f5b1d04f0799b3571b12918af177fc8" }
-
-[[language]]
-name = "swift"
-scope = "source.swift"
-injection-regex = "swift"
-file-types = ["swift", "swiftinterface"]
-roots = ["Package.swift"]
-comment-token = "//"
-block-comment-tokens = { start = "/*", end = "*/" }
-formatter = { command = "swift-format" }
-language-servers = ["sourcekit-lsp"]
-
-[[grammar]]
-name = "swift"
-source = { git = "https://github.com/alex-pinkus/tree-sitter-swift", rev = "57c1c6d6ffa1c44b330182d41717e6fe37430704" }
-
-[[language]]
-name = "solidity"
-scope = "source.sol"
-injection-regex = "(sol|solidity)"
-file-types = ["sol"]
-comment-token = "//"
-block-comment-tokens = { start = "/*", end = "*/" }
-indent = { tab-width = 4, unit = "    " }
-language-servers = ["solc"]
-
-[[grammar]]
-name = "solidity"
-source = { git = "https://github.com/JoranHonig/tree-sitter-solidity", rev = "f7f5251a3f5b1d04f0799b3571b12918af177fc8" }
+#
+# [[language]]
+# name = "swift"
+# scope = "source.swift"
+# injection-regex = "swift"
+# file-types = ["swift", "swiftinterface"]
+# roots = ["Package.swift"]
+# comment-token = "//"
+# block-comment-tokens = { start = "/*", end = "*/" }
+# formatter = { command = "swift-format" }
+# language-servers = ["sourcekit-lsp"]
+#
+# [[grammar]]
+# name = "swift"
+# source = { git = "https://github.com/alex-pinkus/tree-sitter-swift", rev = "57c1c6d6ffa1c44b330182d41717e6fe37430704" }
