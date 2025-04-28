@@ -1,14 +1,10 @@
-[[language-server.json-ls]]
-command = "vscode-json-language-server"
-args = ["--stdio"]
+[language-server.yaml-language-server.config.yaml]
+format = { enable = true }
+validation = true
 
-[[language-server.toml-ls]]
-command = "taplo"
-args = ["fmt", "-"]
-
-[[language-server.yaml-ls]]
-command = "yaml-language-server"
-args = ["--stdio"]
+[language-server.yaml-language-server.config.yaml.schemas]
+"https://json.schemastore.org/github-workflow.json" = ".github/workflows/*.{yml,yaml}"
+"https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json" = "roles/{tasks,handlers}/*.{yml,yaml}"
 
 [language-server.tailwindcss-ls]
 command = "tailwindcss-language-server"
@@ -96,17 +92,8 @@ name = "rust"
 source = { git = "https://github.com/tree-sitter/tree-sitter-rust", rev = "1f63b33efee17e833e0ea29266dd3d713e27e321" }
 
 [[language]]
-name = "json"
-language-servers = ["json-ls"]
-
-[[language]]
 name = "toml"
-auto-format = true
-language-servers = ["toml-ls"]
-
-[[language]]
-name = "yaml"
-language-servers = ["yaml-ls"]
+formatter = { command = "taplo", args = ["fmt", "-"] }
 
 [[language]]
 name = "astro"
