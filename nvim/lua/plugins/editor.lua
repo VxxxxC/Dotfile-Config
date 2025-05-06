@@ -1,6 +1,6 @@
 return {
   {
-    enabled = false,
+    enabled = true,
     "folke/flash.nvim",
     ---@type Flash.Config
     opts = {
@@ -9,6 +9,48 @@ return {
         multi_window = false,
         wrap = false,
         incremental = true,
+      },
+    },
+    keys = {
+      {
+        "<leader>Fs",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump()
+        end,
+        desc = "Flash",
+      },
+      {
+        "<leader>FS",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").treesitter()
+        end,
+        desc = "Flash Treesitter",
+      },
+      {
+        "<leader>Fr",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").remote()
+        end,
+        desc = "Remote Flash",
+      },
+      {
+        "<leader>FR",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").treesitter_search()
+        end,
+        desc = "Treesitter Search",
+      },
+      {
+        "<leader>Ft",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").toggle()
+        end,
+        desc = "Toggle Flash Search",
       },
     },
   },
