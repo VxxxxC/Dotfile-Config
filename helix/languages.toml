@@ -92,6 +92,7 @@ comment-token = "--"
 block-comment-tokens = { start = "--[[", end = "--]]" }
 indent = { tab-width = 2, unit = "  " }
 language-servers = [ "lua-language-server" ]
+formatter = { command = "stylua", args = [ "-" ] }
 
 [[grammar]]
 name = "lua"
