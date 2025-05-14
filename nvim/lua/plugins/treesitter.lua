@@ -1,0 +1,93 @@
+-- Highlight, edit, and navigate code.
+return {
+	{
+		"nvim-treesitter/nvim-treesitter",
+		dependencies = {
+			{
+				"nvim-treesitter/nvim-treesitter-context",
+				opts = {
+					-- Avoid the sticky context from growing a lot.
+					max_lines = 3,
+					-- Match the context lines to the source code.
+					multiline_threshold = 1,
+					-- Disable it when the window is too small.
+					min_window_height = 20,
+				},
+				keys = {
+					{
+						"[c",
+						function()
+							-- Jump to previous change when in diffview.
+							if vim.wo.diff then
+								return "[c"
+							else
+								vim.schedule(function()
+									require("treesitter-context").go_to_context()
+								end)
+								return "<Ignore>"
+							end
+						end,
+						desc = "Jump to upper context",
+						expr = true,
+					},
+				},
+			},
+		},
+		version = false,
+		build = ":TSUpdate",
+		config = function()
+			local configs = require("nvim-treesitter.configs")
+
+			configs.setup({
+				opts = {
+					ensure_installed = {
+						"bash",
+						"c",
+						"cpp",
+						"fish",
+						"gitcommit",
+						"graphql",
+						"html",
+						"java",
+						"javascript",
+						"json",
+						"json5",
+						"jsonc",
+						"lua",
+						"markdown",
+						"markdown_inline",
+						"python",
+						"query",
+						"rasi",
+						"regex",
+						"rust",
+						"scss",
+						"toml",
+						"tsx",
+						"typescript",
+						"vim",
+						"vimdoc",
+						"yaml",
+					},
+					auto_install = true,
+					sync_install = true,
+					highlight = { enable = true },
+					incremental_selection = {
+						enable = true,
+						keymaps = {
+							init_selection = "<Enter>",
+							node_incremental = "<Enter>",
+							scope_incremental = false,
+							node_decremental = "<Backspace>",
+						},
+					},
+					indent = {
+						enable = true,
+						-- Treesitter unindents Yaml lists for some reason.
+						disable = { "yaml" },
+					},
+				},
+			})
+		end,
+	},
+}
