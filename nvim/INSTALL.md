@@ -2,8 +2,9 @@
 
 ---
 
-> \*\*Neovim Plugins searching help in terminal
+> **Neovim Plugins searching help in terminal**
 > |api| description|
+> |---|---|
 > |https://nvim.sh| help|
 > |https://nvim.sh/s| return all plugins in directory|
 > |https://nvim.sh/s/:search| search for plugin within directory|
@@ -35,6 +36,7 @@
 - [x] which-key (keymap manager)
 - [x] flash.nvim (navigate and search)
 - [x] lualine (nvim window bottom line UI)
+- [x] render-markdown (markdown instant preview)
 
 ## Custom Make
 
