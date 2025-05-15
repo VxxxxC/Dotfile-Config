@@ -1,5 +1,17 @@
 # Neovim Setup with Lazy.vim
 
+---
+
+> \*\*Neovim Plugins searching help in terminal
+> |api| description|
+> |https://nvim.sh| help|
+> |https://nvim.sh/s| return all plugins in directory|
+> |https://nvim.sh/s/:search| search for plugin within directory|
+> |https://nvim.sh/t| list all tags within directory|
+> |https://nvim.sh/t/:search| search for plugins that exactly match tag within directory|
+
+---
+
 ## Global setup
 
 - [x] install lazy.vim
@@ -22,5 +34,8 @@
 - [x] bufferline (buffer control)
 - [x] which-key (keymap manager)
 - [x] flash.nvim (navigate and search)
-- [x] yanky.nvim
-- [x] mini.statusline
+- [x] lualine (nvim window bottom line UI)
+
+## Custom Make
+
+- [x] winbar (Top nvim window bar showing current file path)
