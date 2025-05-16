@@ -19,7 +19,7 @@ vim.g.lazyvim_picker = "auto"
 -- Can be one of: nvim-cmp, blink.cmp
 -- Leave it to "auto" to automatically use the completion engine
 -- enabled with `:LazyExtras`
-vim.g.lazyvim_cmp = "auto"
+vim.g.lazyvim_cmp = "blink.cmp"
 
 -- if the completion engine supports the AI source,
 -- use that instead of inline suggestions
@@ -66,12 +66,12 @@ opt.confirm = true -- Confirm to save changes before exiting modified buffer
 opt.cursorline = true -- Enable highlighting of the current line
 opt.expandtab = true -- Use spaces instead of tabs
 opt.fillchars = {
-	foldopen = "",
-	foldclose = "",
-	fold = " ",
-	foldsep = " ",
-	diff = "╱",
-	eob = " ",
+  foldopen = "",
+  foldclose = "",
+  fold = " ",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
 }
 opt.foldlevel = 99
 opt.formatexpr = "v:lua.require'lazyvim.util'.format.formatexpr()"
@@ -119,13 +119,13 @@ vim.opt.path:append({ "**" }) -- Finding files - Search down into subfolders
 vim.opt.wildignore:append({ "*/node_modules/*" })
 
 if vim.fn.has("nvim-0.10") == 1 then
-	opt.smoothscroll = true
-	opt.foldexpr = "v:lua.require'lazyvim.util'.ui.foldexpr()"
-	opt.foldmethod = "expr"
-	opt.foldtext = ""
+  opt.smoothscroll = true
+  opt.foldexpr = "v:lua.require'lazyvim.util'.ui.foldexpr()"
+  opt.foldmethod = "expr"
+  opt.foldtext = ""
 else
-	opt.foldmethod = "indent"
-	opt.foldtext = "v:lua.require'lazyvim.util'.ui.foldtext()"
+  opt.foldmethod = "indent"
+  opt.foldtext = "v:lua.require'lazyvim.util'.ui.foldtext()"
 end
 
 -- Fix markdown indentation settings
