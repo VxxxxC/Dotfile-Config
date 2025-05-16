@@ -13,7 +13,8 @@ return {
       ---@type blink.cmp.config.keymap
       keymap = {
         preset = "default",
-        ["<Enter>"] = { "select_and_accept" },
+        ["<Tab>"] = { "select_and_accept" },
+        ["<S-Tab>"] = { "hide" },
         ["<C-d>"] = { "scroll_documentation_down", "fallback" },
         ["<C-u>"] = { "scroll_documentation_up", "fallback" },
       },
