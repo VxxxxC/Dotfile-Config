@@ -18,6 +18,7 @@ return {
       {
         "<leader>m",
         group = "mini-files",
+        icon = require("config.theme").icons.window,
       },
       {
         "<leader>mm",
