@@ -26,7 +26,6 @@ return {
 
     init = function()
       vim.diagnostic.config({
-
         virtual_text = {
           spacing = 4,
           source = "if_many",
@@ -53,41 +52,26 @@ return {
       })
     end,
 
-    --[[ opts = {
-      --- @type vim.diagnostic.config
-      diagnostics = {
-        virtual_text = {
-          spacing = 4,
-          source = "if_many",
-          prefix = "●",
-        },
-        underlinder = true,
-        underline = { severity = vim.diagnostic.severity.ERROR },
-        update_in_insert = true,
-        float = {
-          spacing = 4,
-          border = "rounded",
-          focusable = true,
-          source = "if_many",
-        },
-        severity_sort = true,
-        signs = {
-          text = {
-            [vim.diagnostic.severity.ERROR] = theme.diagnostics_icons.Error,
-            [vim.diagnostic.severity.WARN] = theme.diagnostics_icons.Warn,
-            [vim.diagnostic.severity.HINT] = theme.diagnostics_icons.Hint,
-            [vim.diagnostic.severity.INFO] = theme.diagnostics_icons.Info,
-          },
-        },
-      },
-      codelens = { enabled = true },
-    }, ]]
-
     config = function()
       vim.api.nvim_create_autocmd("LspAttach", {
         desc = "LSP actions",
         callback = function(event)
           local keys = {
+            {
+              "[d",
+              "<CMD>Lspsaga diagnostic_jump_prev<CR>",
+              desc = " Prev Diagnostic ERROR",
+            },
+            {
+              "]d",
+              "<CMD>Lspsaga diagnostic_jump_next<CR>",
+              desc = "Next Diagnostic ERROR",
+            },
+            --[[ {
+              "K",
+              "<CMD>Lspsaga hover_doc<CR>",
+              desc = "Hover Doc",
+            }, ]]
             {
               "gF",
               "<cmd>lua vim.lsp.buf.format({ async = true })<cr>",
@@ -111,7 +95,7 @@ return {
             },
             {
               "ga",
-              require("fzf-lua").lsp_code_actions,
+              "<CMD>Lspsaga code_action<CR>",
               desc = "Code Actions",
               icon = theme.icons.codelens,
               mode = { "n", "x" },
@@ -131,9 +115,7 @@ return {
             },
             {
               "gd",
-              function()
-                Snacks.picker.lsp_definitions()
-              end,
+              "<CMD>tab split | Lspsaga goto_definition<CR>",
               desc = "Goto Definition",
               icon = theme.icons.go,
             },
@@ -147,9 +129,7 @@ return {
             },
             {
               "gt",
-              function()
-                Snacks.picker.lsp_type_definitions()
-              end,
+              "<CMD>tab split | Lspsaga goto_type_definition<CR>",
               desc = "Goto Type Definition",
               icon = theme.icons.go,
             },
