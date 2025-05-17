@@ -173,7 +173,7 @@ return {
             },
             {
               "gR",
-              "<cmd>lua vim.lsp.buf.rename()<cr>",
+              "<cmd>Lspsaga rename<cr>",
               desc = "Rename Symbol",
               icon = theme.icons.rename,
             },
