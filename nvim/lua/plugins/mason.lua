@@ -9,7 +9,26 @@ return {
     lazy = false,
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "rust_analyzer" },
+        ensure_installed = {
+          "bashls",
+          "lua_ls",
+          "marksman",
+          "tailwindcss",
+          "prettierd",
+          "cssls",
+          "html",
+          "eslint",
+          "vtsls",
+          "yamlls",
+          "rust_analyzer",
+          "luacheck",
+          "selene",
+          "shfmt",
+          "stylelint",
+          "stylua",
+          "taplo",
+          "yamlfmt",
+        },
       })
     end,
   },
