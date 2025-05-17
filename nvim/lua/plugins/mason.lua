@@ -39,6 +39,9 @@ return {
       -- You'll need to check that you have the required things installed
       -- online, please don't ask me how to install them :)
       ensure_installed = {
+        "bash",
+        "js",
+        "codelldb",
         -- Update this to ensure that you have the debuggers for the langs you want
       },
     },
