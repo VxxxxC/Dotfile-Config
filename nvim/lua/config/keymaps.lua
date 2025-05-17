@@ -74,3 +74,11 @@ keymap.set("n", "r", "R")
 
 -- Change R to global search and replace keymap
 keymap.set("n", "R", ":%s/")
+
+-- Jump into hyper tag in vim doc
+keymap.set("n", "<CR>", "<C-]>", opts)
+
+-- bordered style hover floating window for Lsp Doc
+keymap.set("n", "K", function()
+  vim.lsp.buf.hover({ border = "single", width = 60 })
+end, opts)
