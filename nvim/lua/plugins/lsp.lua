@@ -22,18 +22,38 @@ return {
         lazy = true,
         config = symbol_usage_configure,
       },
-      {
-        "icholy/lsplinks.nvim",
-        event = "LspAttach",
-        lazy = true,
-        config = function()
-          require("lsplinks").setup()
-        end,
-      },
     },
 
-    opts = {
-      inlay_hints = { enabled = true },
+    init = function()
+      vim.diagnostic.config({
+
+        virtual_text = {
+          spacing = 4,
+          source = "if_many",
+          prefix = "●",
+        },
+        underlinder = true,
+        underline = { severity = vim.diagnostic.severity.ERROR },
+        update_in_insert = true,
+        float = {
+          spacing = 4,
+          border = "rounded",
+          focusable = true,
+          source = "if_many",
+        },
+        severity_sort = true,
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = theme.diagnostics_icons.Error,
+            [vim.diagnostic.severity.WARN] = theme.diagnostics_icons.Warn,
+            [vim.diagnostic.severity.HINT] = theme.diagnostics_icons.Hint,
+            [vim.diagnostic.severity.INFO] = theme.diagnostics_icons.Info,
+          },
+        },
+      })
+    end,
+
+    --[[ opts = {
       --- @type vim.diagnostic.config
       diagnostics = {
         virtual_text = {
@@ -61,11 +81,9 @@ return {
         },
       },
       codelens = { enabled = true },
-    },
+    }, ]]
 
     config = function()
-      vim.g.inlay_hints = true
-
       vim.api.nvim_create_autocmd("LspAttach", {
         desc = "LSP actions",
         callback = function(event)
@@ -178,52 +196,6 @@ return {
               "<cmd>lua vim.lsp.buf.rename()<cr>",
               desc = "Rename Symbol",
               icon = theme.icons.rename,
-            },
-            {
-              "gN",
-              function()
-                diagnostics("next", vim.diagnostic.severity.ERROR)
-              end,
-              desc = "Next ERROR",
-              icon = theme.diagnostics_icons.Error,
-            },
-            {
-              "gx",
-              require("lsplinks").gx,
-              desc = "Open Link",
-              icon = "theme.icons.world",
-            },
-            {
-              "gP",
-              function()
-                diagnostics("prev", vim.diagnostic.severity.ERROR)
-              end,
-              desc = "Previous ERROR",
-              icon = theme.diagnostics_icons.Error,
-            },
-            {
-              "gn",
-              function()
-                diagnostics("next", vim.diagnostic.severity.WARN)
-              end,
-              desc = "Next WARN",
-              icon = theme.diagnostics_icons.Warn,
-            },
-            {
-              "gp",
-              function()
-                diagnostics("prev", vim.diagnostic.severity.WARN)
-              end,
-              desc = "Previous WARN",
-              icon = theme.diagnostics_icons.Warn,
-            },
-            {
-              "gT",
-              function()
-                diagnostics("next", vim.diagnostic.severity.HINT)
-              end,
-              desc = "Next HINT",
-              icon = theme.diagnostics_icons.Hint,
             },
             {
               "ge",
