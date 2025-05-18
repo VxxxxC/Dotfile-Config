@@ -115,7 +115,9 @@ return {
             },
             {
               "gd",
-              "<CMD>tab split | Lspsaga goto_definition<CR>",
+              function()
+                Snacks.picker.lsp_definitions()
+              end,
               desc = "Goto Definition",
               icon = theme.icons.go,
             },
@@ -129,8 +131,26 @@ return {
             },
             {
               "gt",
-              "<CMD>tab split | Lspsaga goto_type_definition<CR>",
+              function()
+                Snacks.picker.lsp_type_definitions()
+              end,
               desc = "Goto Type Definition",
+              icon = theme.icons.go,
+            },
+            {
+              "gr",
+              function()
+                Snacks.picker.lsp_references()
+              end,
+              desc = "Goto References",
+              icon = theme.icons.go,
+            },
+            {
+              "gi",
+              function()
+                Snacks.picker.lsp_implementations()
+              end,
+              desc = "Goto Implementations",
               icon = theme.icons.go,
             },
             {
@@ -149,22 +169,7 @@ return {
               desc = "Workspace Symbols",
               icon = theme.icons.docs,
             },
-            {
-              "gr",
-              function()
-                Snacks.picker.lsp_references()
-              end,
-              desc = "Goto References",
-              icon = theme.icons.go,
-            },
-            {
-              "gi",
-              function()
-                Snacks.picker.lsp_implementations()
-              end,
-              desc = "Goto Implementations",
-              icon = theme.icons.go,
-            },
+
             {
               "gl",
               "<cmd>lua vim.diagnostic.open_float({ border = 'rounded', focusable = true })<cr>",
