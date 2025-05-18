@@ -68,10 +68,10 @@ return {
         },
         winopts = {
           height = 0.7,
-          width = 0.55,
+          -- width = 0.55,
           preview = {
-            scrollbar = false,
-            layout = "vertical",
+            scrollbar = true,
+            layout = "horizontal",
             vertical = "up:40%",
           },
         },
