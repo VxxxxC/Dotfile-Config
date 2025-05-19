@@ -16,7 +16,7 @@ return {
           "cssls",
           "html",
           "eslint",
-          "vtsls",
+          "ts_ls",
           "yamlls",
           "rust_analyzer",
         },

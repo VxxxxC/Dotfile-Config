@@ -76,7 +76,7 @@ keymap.set("n", "r", "R")
 keymap.set("n", "R", ":%s/")
 
 -- Jump into hyper tag in vim doc
-keymap.set("n", "<CR>", "<C-]>", opts)
+-- keymap.set("n", "<CR>", "<C-]>", opts)
 
 -- bordered style hover floating window for Lsp Doc NOTE: use LspSaga hover doc
 keymap.set(
