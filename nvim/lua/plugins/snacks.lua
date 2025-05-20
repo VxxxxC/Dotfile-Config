@@ -33,9 +33,9 @@ return {
       {
         ";f",
         function()
-          Snacks.picker.smart()
+          Snacks.picker.files({ hidden = true, ignored = true })
         end,
-        desc = "Smart Find Files",
+        desc = "Find Files",
       },
       {
         ";;",
