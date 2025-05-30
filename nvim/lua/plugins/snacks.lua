@@ -64,6 +64,25 @@ return {
         end,
         desc = "Lazygit",
       },
+      {
+        "<leader>b",
+        group = "Buffer",
+        icon = require("config.theme").icons.buffers,
+      },
+      {
+        "<leader>bf",
+        function()
+          Snacks.picker.buffers()
+        end,
+        desc = "Find Buffer",
+      },
+      {
+        "<leader>br",
+        function()
+          Snacks.picker.grep_buffers()
+        end,
+        desc = "Grep Buffer",
+      },
     }
     require("which-key").add(keys)
   end,
