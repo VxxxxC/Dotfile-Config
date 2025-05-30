@@ -10,7 +10,7 @@ return {
     claude = {
       endpoint = "https://api.anthropic.com",
       model = "claude-3-5-sonnet-20241022",
-      api_key_name = "ANTHROPIC_API_KEY",
+      api_key_name = "ANTHROPIC_API_KEY", -- TODO SETUP API SECRET KEY AND EXPROT TO "ANTHROPIC_API_KEY"
       timeout = 30000,
       temperature = 0,
       max_tokens = 4096,
@@ -18,7 +18,7 @@ return {
     openai = {
       endpoint = "https://api.openai.com/v1",
       model = "gpt-4o",
-      api_key_name = "OPENAI_API_KEY",
+      api_key_name = "OPENAI_API_KEY", -- TODO SETUP API SECRET KEY AND EXPORT TO "OPENAI_API_KEY"
       timeout = 30000,
       temperature = 0,
       max_completion_tokens = 4096, --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
