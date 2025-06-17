@@ -41,7 +41,7 @@ export PATH="/opt/homebrew/lib/ruby/gems/2.7.0/bin:$PATH"
 # or
 export PATH="/usr/local/lib/ruby/gems/2.7.0/bin:$PATH"
 
-# below is fish-exa shortcut command 
+# below is fish-exa shortcut command
 if type -q ll
     alias ll lli
     alias lla llai
@@ -70,3 +70,8 @@ set PATH $PATH /Users/vxxxxc/.local/bin
 # change Python version on local project by pyenv
 export PATH="/Users/vxxxxc/.pyenv/shims:$PATH"
 eval "$(pyenv init --path)"
+
+
+# Export variables for docker ipfs image
+export ipfs_staging="/Users/vxxxxc/.ipfs/ipfs_staging/"
+export ipfs_data="/Users/vxxxxc/.ipfs/ipfs_data/"
