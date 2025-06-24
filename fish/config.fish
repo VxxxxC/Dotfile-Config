@@ -59,7 +59,6 @@ alias python python3
 alias pip pip3
 alias http curlie
 alias xcode "open -a Xcode"
-alias m mise
 
 if type -q fzf
     alias fzf "fzf --preview 'cat {}' --margin 5% --padding 5% --border"
@@ -75,4 +74,3 @@ eval "$(pyenv init --path)"
 # Export variables for docker ipfs image
 export ipfs_staging="/Users/vxxxxc/.ipfs/ipfs_staging/"
 export ipfs_data="/Users/vxxxxc/.ipfs/ipfs_data/"
-mise activate fish | source
