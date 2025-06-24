@@ -75,3 +75,4 @@ eval "$(pyenv init --path)"
 # Export variables for docker ipfs image
 export ipfs_staging="/Users/vxxxxc/.ipfs/ipfs_staging/"
 export ipfs_data="/Users/vxxxxc/.ipfs/ipfs_data/"
+mise activate fish | source
