@@ -1,12 +1,30 @@
 return {
+  -- {
+  --   "craftzdog/solarized-osaka.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   init = function()
+  --     -- Set my colorscheme.
+  --     vim.g.colors_name = "solarized-osaka"
+  --     vim.cmd("colorscheme solarized-osaka")
+  --   end,
+  -- },
   {
-    "craftzdog/solarized-osaka.nvim",
+    "ribru17/bamboo.nvim",
     lazy = false,
     priority = 1000,
+
+    config = function()
+      require("bamboo").setup({
+        style = "multiplex",
+        toggle_style_list = { "multiplex" },
+        transparent = true,
+      })
+      require("bamboo").load()
+    end,
     init = function()
-      -- Set my colorscheme.
-      vim.g.colors_name = "solarized-osaka"
-      vim.cmd("colorscheme solarized-osaka")
+      vim.g.colors_name = "bamboo"
+      vim.cmd("colorscheme bamboo")
     end,
   },
 }
