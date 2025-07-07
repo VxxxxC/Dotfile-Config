@@ -86,3 +86,5 @@ keymap.set(
   --[[ function()  vim.lsp.buf.hover({ border = "single", width = 60 })end, ]]
   opts
 )
+
+keymap.set("n", "<ESC>", ":noh<CR>")
