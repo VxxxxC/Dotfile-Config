@@ -74,3 +74,8 @@ eval "$(pyenv init --path)"
 # Export variables for docker ipfs image
 export ipfs_staging="/Users/vxxxxc/.ipfs/ipfs_staging/"
 export ipfs_data="/Users/vxxxxc/.ipfs/ipfs_data/"
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/vxxxxc/.lmstudio/bin
+# End of LM Studio CLI section
+
