@@ -4,7 +4,11 @@ return {
     "folke/flash.nvim",
     event = "VeryLazy",
     opts = {
-      jump = { nohlsearch = true },
+      jump = {
+        jumplist = true,
+        nohlsearch = true,
+        pos = "start",
+      },
       prompt = {
         win_config = {
           border = "none",
@@ -30,6 +34,12 @@ return {
       modes = {
         -- Enable flash when searching with ? or /
         search = { enabled = true },
+      },
+      label = {
+        uppercase = true,
+        rainbow = {
+          enabled = true,
+        },
       },
     },
     keys = {
