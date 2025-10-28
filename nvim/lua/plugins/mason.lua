@@ -15,8 +15,6 @@ return {
           "tailwindcss",
           "cssls",
           "html",
-          "eslint",
-          "ts_ls",
           "yamlls",
           "rust_analyzer",
         },
