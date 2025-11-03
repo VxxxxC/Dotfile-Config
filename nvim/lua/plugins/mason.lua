@@ -19,6 +19,7 @@ return {
           "html",
           "yamlls",
           "rust_analyzer",
+          "efm",
         },
       })
     end,
