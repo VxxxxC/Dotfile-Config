@@ -21,6 +21,7 @@ return {
         typescriptreact = { "prettierd", name = "dprint", timeout_ms = 500, lsp_format = "fallback" },
         yaml = { "yamlfmt" },
         toml = { "taplo" },
+        solidity = { "forge_fmt" },
 
         -- For filetypes without a formatter:
         ["_"] = { "trim_whitespace", "trim_newlines" },

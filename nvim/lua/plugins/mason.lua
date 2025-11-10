@@ -19,7 +19,7 @@ return {
           "html",
           "yamlls",
           "rust_analyzer",
-          "efm",
+          "solidity_ls",
         },
       })
     end,

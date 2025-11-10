@@ -2,12 +2,11 @@ return {
   {
     "creativenull/efmls-configs-nvim",
     version = "v1.x.x",
+    enabled = false,
 
     init = function()
-      local solhint = require("efmls-configs.linters.solhint")
-      local prettier_d = require("efmls-configs.formatters.prettier_d")
       local languages = {
-        solidity = { solhint, prettier_d },
+        solidity = {},
       }
 
       local efmls_configs = {
