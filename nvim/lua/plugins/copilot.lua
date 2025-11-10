@@ -46,12 +46,6 @@ return {
         copilot_node_command = "node", -- Node.js version must be > 16.x
         server_opts_overrides = {},
       })
-
-      local wk = require("which-key")
-      wk.add({
-        { "<leader>c", group = "Copilot", icon = require("config.theme").icons.copilot },
-        { "<leader>cc", "<cmd>Copilot panel<CR>", desc = "Open Copilot Panel", mode = "n" },
-      })
     end,
   },
   {
@@ -73,6 +67,13 @@ return {
     init = function()
       vim.api.nvim_set_hl(0, "CopilotChatHeader", { fg = "#7C3AED", bold = true })
       vim.api.nvim_set_hl(0, "CopilotChatSeparator", { fg = "#374151" })
+
+      local wk = require("which-key")
+      wk.add({
+        { "<leader>c", group = "Copilot", icon = require("config.theme").icons.copilot },
+        { "<leader>cc", "<cmd>CopilotChatToggle<CR>", desc = "Open Copilot Chat Panel", mode = "n" },
+        { "<leader>cp", "<cmd>CopilotChatPrompts<CR>", desc = "Open Copilot Chat Panel", mode = "v" },
+      })
     end,
   },
 }
