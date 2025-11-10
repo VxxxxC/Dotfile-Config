@@ -87,4 +87,5 @@ keymap.set(
   opts
 )
 
+-- ESC
 keymap.set("n", "<ESC>", ":noh<CR>")
