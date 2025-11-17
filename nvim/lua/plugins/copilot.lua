@@ -43,7 +43,7 @@ return {
 
     init = function()
       -- set keymap for copilot.lua
-      vim.keymap.set("n", "<C-i>", function()
+      vim.keymap.set("n", "<C-q>", function()
         if require("copilot.panel").is_open() == true then
           require("copilot.panel").accept()
         else
@@ -51,7 +51,7 @@ return {
         end
       end, { desc = "Open Copilot Panel" }, opts)
 
-      vim.keymap.set("i", "<C-i>", "<cmd>Copilot suggestion accept<CR>", { desc = "Accept Copilot Suggestion" }, opts)
+      vim.keymap.set("i", "<C-q>", "<cmd>Copilot suggestion accept<CR>", { desc = "Accept Copilot Suggestion" }, opts)
     end,
   },
   {
