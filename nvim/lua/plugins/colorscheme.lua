@@ -19,6 +19,17 @@ return {
         style = "multiplex",
         toggle_style_list = { "multiplex" },
         transparent = true,
+        term_colors = true,
+        dim_inactive = true,
+
+        code_style = {
+          comments = "italic",
+          keywords = "bold",
+        },
+
+        lualine = {
+          transparent = true,
+        },
       })
       require("bamboo").load()
     end,
