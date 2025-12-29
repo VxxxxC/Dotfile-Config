@@ -8,9 +8,9 @@ return {
       mappings = {
         add = "ss",
         delete = "sd",
-        find = "sf",
-        find_left = "fl",
-        highlight = "sh",
+        find = "sF",
+        find_left = "fL",
+        highlight = "sH",
         replace = "sr",
 
         -- Add this only if you don't want to use extended mappings
