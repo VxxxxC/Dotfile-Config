@@ -87,5 +87,11 @@ keymap.set(
   opts
 )
 
+-- Go to next buffer
+keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Next Buffer" })
+
+-- Back to previous buffer
+keymap.set("n", "<leader>bb", "<cmd>bprevious<CR>", { desc = "Previous Buffer" })
+
 -- ESC
 keymap.set("n", "<ESC>", ":noh<CR>")
