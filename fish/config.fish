@@ -29,6 +29,13 @@ end
 . ~/.config/fish/conf.d/nvm.fish
 nvm use 23
 
+# bun completions
+[ -s "/Users/vxxxxc/.bun/_bun" ] && source "/Users/vxxxxc/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 #This is oh-my-posh theme init when starting up fish shell
 eval "$(oh-my-posh init fish --config $(brew --prefix oh-my-posh)/themes/kushal.omp.json)"
 
