@@ -1,10 +1,11 @@
--- Formatting.
+-- INFO: Code Formatting.
 return {
   {
     "stevearc/conform.nvim",
     event = "BufWritePre",
     opts = {
-      notify_on_error = false,
+      notify_on_error = true,
+      notify_no_formatters = true,
       formatters_by_ft = {
         javascript = { "prettierd", name = "dprint", timeout_ms = 500, lsp_format = "fallback" },
         javascriptreact = { "prettierd", name = "dprint", timeout_ms = 500, lsp_format = "fallback" },
@@ -38,7 +39,10 @@ return {
           return nil
         end
 
-        return {}
+        return {
+          lsp_format = "fallback",
+          timtout_ms = 500,
+        }
       end,
       formatters = {
         -- Require a prettier configuration file to format.
