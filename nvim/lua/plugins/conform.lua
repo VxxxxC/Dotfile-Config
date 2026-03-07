@@ -20,6 +20,7 @@ return {
         bash = { "shfmt" },
         typescript = { "prettierd", name = "dprint", timeout_ms = 500, lsp_format = "fallback" },
         typescriptreact = { "prettierd", name = "dprint", timeout_ms = 500, lsp_format = "fallback" },
+        svelte = { "prettierd", name = "dprint", timeout_ms = 500, lsp_format = "fallback" },
         yaml = { "yamlfmt" },
         toml = { "taplo" },
         solidity = { "forge_fmt" },

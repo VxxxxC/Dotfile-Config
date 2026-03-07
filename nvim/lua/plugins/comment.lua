@@ -44,11 +44,12 @@ return {
           -- signs = false, -- configure signs for some keywords individually
         },
         TODO = { icon = " ", color = "todo" },
-        HACK = { icon = " ", color = "warning" },
-        WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-        PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+        HACK = { icon = " ", color = "hack" },
+        WARN = { icon = " ", color = "warning", alt = { "WARNING", "IMPORT", "IMPORTANT" } },
+        PERF = { icon = " ", color = "default", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
         NOTE = { icon = " ", color = "info", alt = { "INFO" } },
         TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+        COL = { icon = " ", color = "default", alt = { "COLUMN" } },
       },
 
       gui_style = {
@@ -83,6 +84,7 @@ return {
         todo = { "#3498DB" },
         info = { "#10B981" },
         test = { "#FF00FF" },
+        hack = { "#FF6800" },
       },
 
       search = {
