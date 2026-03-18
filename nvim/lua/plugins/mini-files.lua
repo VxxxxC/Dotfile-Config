@@ -3,8 +3,8 @@ return {
   opts = {
     windows = {
       preview = true,
-      width_focus = 30,
-      width_preview = 30,
+      width_focus = 40,
+      width_preview = 80,
     },
     options = {
       -- Whether to use for editing directories
@@ -12,22 +12,31 @@ return {
       use_as_default_explorer = false,
     },
   },
-  keys = {
-    {
-      "<leader>fm",
-      function()
-        require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
-      end,
-      desc = "Open mini.files (Directory of Current File)",
-    },
-    {
-      "<leader>fM",
-      function()
-        require("mini.files").open(vim.uv.cwd(), true)
-      end,
-      desc = "Open mini.files (cwd)",
-    },
-  },
+
+  init = function()
+    require("which-key").add({
+      {
+        "<leader>m",
+        group = "mini-files",
+        icon = require("config.theme").icons.window,
+      },
+      {
+        "<leader>mm",
+        function()
+          require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
+        end,
+        desc = "Open mini.files (Directory of Current File)",
+      },
+      {
+        "<leader>mM",
+        function()
+          require("mini.files").open(vim.uv.cwd(), true)
+        end,
+        desc = "Open mini.files (cwd)",
+      },
+    })
+  end,
+
   config = function(_, opts)
     require("mini.files").setup(opts)
 

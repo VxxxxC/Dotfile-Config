@@ -2,18 +2,41 @@
 echo "Welcome to "(uname -a | awk '{print $1 " " $2 " " $3 " " $4 " " $12}')
 uptime
 
+alias v nvim
+alias h hx
+alias g git
+alias python python3
+alias pip pip3
+alias http curlie
+alias xcode "open -a Xcode"
+
+# below is fish-exa shortcut command
+if type -q ll
+    alias ll lli
+    alias lla llai
+end
+if type -q l
+    alias l li
+    alias la lai
+    alias l-tree lt
+end
+
+if type -q fzf
+    alias fzf "fzf --preview 'cat {}' --margin 5% --padding 5% --border"
+end
+
 # nvm
 . ~/.config/fish/conf.d/nvm.fish
 nvm use 23
 
-# Change prompt
-# functions -c fish_prompt _old_fish_prompt
-# function fish_prompt
-#     if set -q VIRTUAL_ENV
-#         echo -n -s (set_color -b blue white) "(" (basename "$VIRTUAL_ENV") ")" (set_color normal) " "
-#     end
-#     _old_fish_prompt
-# end
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+
+# cre
+export CRE_INSTALL="$HOME/.cre"
+export PATH="$CRE_INSTALL/bin:$PATH"
 
 #This is oh-my-posh theme init when starting up fish shell
 eval "$(oh-my-posh init fish --config $(brew --prefix oh-my-posh)/themes/kushal.omp.json)"
@@ -36,33 +59,10 @@ function y
     rm -f -- "$tmp"
 end
 
-# Add rubygems to the path
+# Export rubygems path
 export PATH="/opt/homebrew/lib/ruby/gems/2.7.0/bin:$PATH"
 # or
 export PATH="/usr/local/lib/ruby/gems/2.7.0/bin:$PATH"
-
-# below is fish-exa shortcut command 
-if type -q ll
-    alias ll lli
-    alias lla llai
-end
-if type -q l
-    alias l li
-    alias la lai
-    alias l-tree lt
-end
-
-alias v nvim
-alias h hx
-alias g git
-alias python python3
-alias pip pip3
-alias http curlie
-alias xcode "open -a Xcode"
-
-if type -q fzf
-    alias fzf "fzf --preview 'cat {}' --margin 5% --padding 5% --border"
-end
 
 # Created by `pipx` on 2025-01-08 15:26:21
 set PATH $PATH /Users/vxxxxc/.local/bin
@@ -70,3 +70,14 @@ set PATH $PATH /Users/vxxxxc/.local/bin
 # change Python version on local project by pyenv
 export PATH="/Users/vxxxxc/.pyenv/shims:$PATH"
 eval "$(pyenv init --path)"
+
+# Export variables for docker ipfs image
+export ipfs_staging="/Users/vxxxxc/.ipfs/ipfs_staging/"
+export ipfs_data="/Users/vxxxxc/.ipfs/ipfs_data/"
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/vxxxxc/.lmstudio/bin
+# End of LM Studio CLI section
+
+# Export Solana CLI path
+export PATH="/Users/vxxxxc/.local/share/solana/install/active_release/bin:$PATH"

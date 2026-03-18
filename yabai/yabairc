@@ -16,10 +16,10 @@ yabai -m config window_placement second_child
 
 # Gap
 yabai -m config top_padding 10
-yabai -m config bottom_padding 25
-yabai -m config left_padding 7
-yabai -m config right_padding 7
-yabai -m config window_gap 7
+yabai -m config bottom_padding 10
+yabai -m config left_padding 5
+yabai -m config right_padding 5
+yabai -m config window_gap 5
 
 # Window borders -- removed: https://github.com/koekeishiya/yabai/issues/1889
 #yabai -m config window_border on
@@ -44,4 +44,3 @@ yabai -m config external_bar main:30:0
 # No tiling
 yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add app="^System Settings$" manage=off
-

@@ -80,6 +80,8 @@ inlayHints.functionLikeReturnTypes.enabled = true
 inlayHints.enumMemberValues.enabled = true
 inlayHints.parameterNames.enabled = "all"
 
+[language-server]
+solc = { command = "solc", args = ["--lsp"] }
 
 [[language]]
 name = "lua"
@@ -206,6 +208,22 @@ source = { git = "https://github.com/tree-sitter/tree-sitter-typescript", rev = 
 name = "markdown"
 formatter = { command = 'deno', args = ["fmt", "-", "--ext", "md" ] }
 auto-format = true
+
+[[language]]
+name = "solidity"
+scope = "source.sol"
+roots = [".git"]
+injection-regex = "(sol|solidity)"
+file-types = ["sol"]
+comment-token = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+indent = { tab-width = 4, unit = "    " }
+language-servers = [ "solc" ]
+
+[[grammar]]
+name = "solidity"
+source = { git = "https://github.com/JoranHonig/tree-sitter-solidity", rev = "f7f5251a3f5b1d04f0799b3571b12918af177fc8" }
+
 #
 # [[language]]
 # name = "swift"
