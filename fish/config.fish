@@ -75,9 +75,8 @@ eval "$(pyenv init --path)"
 export ipfs_staging="/Users/vxxxxc/.ipfs/ipfs_staging/"
 export ipfs_data="/Users/vxxxxc/.ipfs/ipfs_data/"
 
-# Added by LM Studio CLI (lms)
-set -gx PATH $PATH /Users/vxxxxc/.lmstudio/bin
-# End of LM Studio CLI section
-
 # Export Solana CLI path
 export PATH="/Users/vxxxxc/.local/share/solana/install/active_release/bin:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/vxxxxc/.antigravity/antigravity/bin:$PATH"
