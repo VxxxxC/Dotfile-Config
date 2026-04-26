@@ -5,6 +5,13 @@ return {
       symbol_in_winbar = {
         enable = false,
       },
+      diagnostic = {
+        show_code_action = true,
+        jump_num_shortcut = true,
+      },
+      lightbulb = {
+        enable = true,
+      },
     })
   end,
   dependencies = {
