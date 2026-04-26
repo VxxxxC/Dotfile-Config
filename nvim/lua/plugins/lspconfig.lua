@@ -78,42 +78,54 @@ return {
             }, ]]
             {
               "gF",
-              "<cmd>lua vim.lsp.buf.format({ async = true })<cr>",
+              function()
+                vim.lsp.buf.format({ async = true })
+              end,
               mode = { "n", "x" },
               icon = theme.icons.magic,
               desc = "Format File",
             },
             {
               "gA",
-              "<cmd>lua vim.lsp.codelens.run()<cr>",
+              function()
+                vim.lsp.codelens.run()
+              end,
               desc = "Code Lens",
               icon = theme.icons.codelens,
               mode = { "n", "x" },
             },
             {
               "gL",
-              "<cmd>lua vim.lsp.codelens.refresh()<cr>",
+              function()
+                vim.lsp.codelens.refresh()
+              end,
               desc = "Refresh Lenses",
               icon = theme.icons.codelens,
               mode = { "n", "x" },
             },
             {
               "ga",
-              "<CMD>Lspsaga code_action<CR>",
+              function()
+                vim.cmd("Lspsaga code_action")
+              end,
               desc = "Code Actions",
               icon = theme.icons.codelens,
               mode = { "n", "x" },
             },
             {
               "<c-k>",
-              "<cmd>lua vim.lsp.buf.signature_help()<cr>",
+              function()
+                vim.lsp.buf.signature_help()
+              end,
               desc = "Signature Help",
               icon = theme.icons.Function,
               mode = "i",
             },
             {
               "gz",
-              "<cmd>lua vim.lsp.buf.signature_help()<cr>",
+              function()
+                vim.lsp.buf.signature_help()
+              end,
               desc = "Signature Help",
               icon = theme.icons.Function,
             },
@@ -176,13 +188,17 @@ return {
 
             {
               "gl",
-              "<cmd>lua vim.diagnostic.open_float({ border = 'rounded', focusable = true })<cr>",
+              function()
+                vim.diagnostic.open_float({ border = "rounded", focusable = true })
+              end,
               desc = "Line Diagnostics",
               icon = theme.diagnostics_icons.Hint,
             },
             {
               "gR",
-              "<cmd>Lspsaga rename<cr>",
+              function()
+                vim.cmd("Lspsaga rename")
+              end,
               desc = "Rename Symbol",
               icon = theme.icons.rename,
             },

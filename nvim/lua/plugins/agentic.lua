@@ -10,7 +10,7 @@ return {
     init = function()
       local wk = require("which-key")
       wk.add({
-        { "<leader>c", group = "Copilot", icon = require("config.theme").icons.copilot },
+        { "<leader>c", group = "Github Copilot", icon = require("config.theme").icons.copilot },
         {
           "<leader>cT",
           function()
@@ -43,6 +43,14 @@ return {
           end,
           desc = "Add all buffer diagnostics to Agentic",
           mode = { "n" },
+        },
+        {
+          "<leader>cA",
+          function()
+            require("agentic").add_selection_or_file_to_context()
+          end,
+          mode = { "n", "v" },
+          desc = "Add file or selection to Agentic to Context",
         },
       })
     end,
