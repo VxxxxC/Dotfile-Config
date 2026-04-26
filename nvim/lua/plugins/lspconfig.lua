@@ -59,12 +59,16 @@ return {
           local keys = {
             {
               "[d",
-              "<CMD>Lspsaga diagnostic_jump_prev<CR>",
+              function()
+                vim.diagnostic.jump({ count = -1, float = true })
+              end,
               desc = " Prev Diagnostic ERROR",
             },
             {
               "]d",
-              "<CMD>Lspsaga diagnostic_jump_next<CR>",
+              function()
+                vim.diagnostic.jump({ count = 1, float = true })
+              end,
               desc = "Next Diagnostic ERROR",
             },
             --[[ {
@@ -226,23 +230,4 @@ return {
       })
     end,
   },
-  -- hightlight TODO/NOTE tags , and showing colors on the code of color hex like #E95678
-  -- {
-  --   "echasnovski/mini.hipatterns",
-  --   config = function()
-  --     local hipatterns = require("mini.hipatterns")
-  --     hipatterns.setup({
-  --       highlighters = {
-  --         -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
-  --         fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
-  --         hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
-  --         todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
-  --         note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
-  --
-  --         -- Highlight hex color strings (`#rrggbb`) using that color
-  --         hex_color = hipatterns.gen_highlighter.hex_color(),
-  --       },
-  --     })
-  --   end,
-  -- },
 }
