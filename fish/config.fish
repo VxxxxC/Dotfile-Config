@@ -2,9 +2,11 @@
 echo "Welcome to "(uname -a | awk '{print $1 " " $2 " " $3 " " $4 " " $12}')
 uptime
 
+# map alias for cli
 alias v nvim
 alias h hx
 alias g git
+alias commit czg
 alias python python3
 alias pip pip3
 alias http curlie
