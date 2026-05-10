@@ -11,6 +11,7 @@ alias python python3
 alias pip pip3
 alias http curlie
 alias xcode "open -a Xcode"
+alias ports='lsof -n -i4TCP | grep LISTEN'
 
 # below is fish-exa shortcut command
 if type -q ll
