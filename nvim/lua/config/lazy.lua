@@ -15,7 +15,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- require("statusline")
+-- Enable NVIM 0.12 new core UI feature
+require("vim._core.ui2").enable({
+  enabled = true,
+})
+require("statusline")
 require("settings")
 require("winbar")
 require("config.keymaps")
