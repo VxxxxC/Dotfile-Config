@@ -7,11 +7,19 @@ return {
     dependencies = {
       "rcarriga/nvim-dap-ui",
       -- virtual text for the debugger
-      {
-        "theHamsta/nvim-dap-virtual-text",
-        opts = {},
-      },
+      "theHamsta/nvim-dap-virtual-text",
     },
+
+    config = function()
+      local dap = require("dap")
+
+      -- INFO: Manual set Rust debugger adapter
+      dap.adapters.lldb = {
+        type = "executable",
+        command = "/usr/bin/lldb",
+        name = "lldb",
+      }
+    end,
 
     init = function()
       local keys = {
@@ -144,9 +152,25 @@ return {
   {
     "rcarriga/nvim-dap-ui",
     dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+    opts = {},
+    init = function()
+      local key = {
+        {
+          "<leader>dT",
+          function()
+            require("dapui").toggle()
+          end,
+          desc = "Toggle Dap UI",
+        },
+      }
+      require("which-key").add(key)
+    end,
   },
   {
     "theHamsta/nvim-dap-virtual-text",
-    opts = {},
+    opts = {
+      enabled = true, -- enable this plugin (the default)
+      enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
+    },
   },
 }
