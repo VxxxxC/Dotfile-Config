@@ -11,7 +11,20 @@ return {
     },
 
     config = function()
-      local dap = require("dap")
+      local dap, dapui = require("dap"), require("dapui")
+      -- INFO: Set auto open/close dap-ui when dap is triggered
+      dap.listeners.before.attach.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.launch.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated.dapui_config = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited.dapui_config = function()
+        dapui.close()
+      end
 
       -- INFO: Manual set Rust debugger adapter
       dap.adapters.lldb = {
