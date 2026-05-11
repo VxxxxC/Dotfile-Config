@@ -36,7 +36,10 @@ return {
     version = false,
     build = ":TSUpdate",
     config = function()
-      local configs = require("nvim-treesitter.configs")
+      local status, configs = pcall(require, "nvim-treesitter.configs")
+      if not status then
+        return
+      end
 
       configs.setup({
         opts = {
