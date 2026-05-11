@@ -95,3 +95,6 @@ keymap.set("n", "<leader>bb", "<cmd>bprevious<CR>", { desc = "Previous Buffer" }
 
 -- ESC
 keymap.set("n", "<ESC>", ":noh<CR>")
+
+-- Restart NVIM (v0.12 feature)
+keymap.set("n", "<leader>rs", "<CMD>restart<CR>", { desc = "Restart Neovim" })
