@@ -26,7 +26,7 @@ return {
 
     init = function()
       vim.lsp.inlay_hint.enable(true) -- INFO:Set inlay_hint default on
-      vim.diagnostic.config({
+      vim.diagnostic.config({ -- INFO: diagnostic config setup
         virtual_text = {
           spacing = 4,
           source = "if_many",
