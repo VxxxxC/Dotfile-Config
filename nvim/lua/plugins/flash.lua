@@ -42,28 +42,41 @@ return {
         },
       },
     },
+
+    -- WARN: only enable in [O-Pending] mode, avoid conflict with other keymaps
+    -- INFO: can use <Ctrl + o> will return last position, if restore = false
     keys = {
       {
-        "<Leader>Fs",
-        mode = { "n", "x", "o" },
+        "s",
+        mode = { "o" },
         function()
-          require("flash").jump()
+          require("flash").jump({
+            remote_op = {
+              restore = false,
+              motion = true,
+            },
+          })
         end,
-        desc = "Flash",
+        desc = "Flash Jump",
       },
-      --[[ {
-        "<eader>FR",
-        mode = { "n", "x", "o" },
-        function()
-          require("flash").treesitter_search()
-        end,
-        desc = "Treesitter Search",
-      }, ]]
       {
-        "<Leader>Fr",
-        mode = { "n", "x", "o" },
+        "S",
+        mode = { "o" },
         function()
-          require("flash").remote()
+          require("flash").treesitter()
+        end,
+        desc = "Treesitter Flash",
+      },
+      {
+        "r",
+        mode = { "o" },
+        function()
+          require("flash").remote({
+            remote_op = {
+              restore = true,
+              motion = true,
+            },
+          })
         end,
         desc = "Remote Flash",
       },
