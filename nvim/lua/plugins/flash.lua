@@ -63,7 +63,7 @@ return {
         "S",
         mode = { "o" },
         function()
-          require("flash").treesitter()
+          require("flash").treesitter_search()
         end,
         desc = "Treesitter Flash",
       },
