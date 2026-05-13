@@ -4,6 +4,7 @@ uptime
 
 # map alias for cli
 alias v nvim
+alias e emacs
 alias h hx
 alias g git
 alias commit czg
@@ -27,6 +28,9 @@ end
 if type -q fzf
     alias fzf "fzf --preview 'cat {}' --margin 5% --padding 5% --border"
 end
+
+# emacs
+export PATH="/Users/vxxxxc/.config/emacs/bin:$PATH"
 
 # nvm
 . ~/.config/fish/conf.d/nvm.fish
