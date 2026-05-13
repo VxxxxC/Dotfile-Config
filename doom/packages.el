@@ -3,9 +3,10 @@
 
 ;; To install a package:
 ;;
-;;   1. Declare them here in a `package!' statement,
-;;   2. Run 'doom sync' in the shell,
-;;   3. Restart Emacs.
+;;   1. M-x -> :package-install <package name>
+;;   2. Declare them here in a `package!' statement,
+;;   3. Run 'doom sync' in the shell,
+;;   4. Restart Emacs.
 ;;
 ;; Use 'C-h f package\!' to look up documentation for the `package!' macro.
 
@@ -52,3 +53,9 @@
 ;; (unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
+
+;; Theme
+(package! catppuccin-theme)
+
+;; Better debugging
+(package! dape)
