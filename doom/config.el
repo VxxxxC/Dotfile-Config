@@ -21,7 +21,7 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+(setq doom-font (font-spec :family "Menlo" :size 15 :weight 'semi-light))
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -42,7 +42,7 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Emacs-Org/")
+(setq org-directory "~/Documents/Obsidian Vault/Emacs Org File/")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -82,3 +82,22 @@
 
 ;; Better debugging
 (use-package! dape)
+
+;; mermaid diagram
+(use-package! ob-mermaid)
+(use-package! mermaid-mode)
+;; 1. 啟用 mermaid Babel 支援
+(org-babel-do-load-languages
+    'org-babel-load-languages
+    '((mermaid . t)
+      (scheme . t)))
+
+;; 2. 指定 CLI 工具路徑 (如果 mmdc 已經喺系統 PATH 入面，直接寫 "mmdc" 即可)
+(setq ob-mermaid-cli-path "mmdc")
+
+ ;; 3. 解決圖片只顯示路徑的問題：每次執行完 Code 後，自動重新載入並顯示圖片！
+;;(add-hook 'org-babel-after-execute-hook #'org-display-inline-images)
+
+;; 4. (可選) 設定全局預設輸出資料夾，例如預設放入 ~/Emacs-Org/mermaid_diagram/
+(setq org-babel-default-header-args:mermaid
+      '((:dir . "~/Documents/Obsidian Vault/Emacs Org File/mermaid-diagram/")))

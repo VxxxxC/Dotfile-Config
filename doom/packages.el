@@ -59,3 +59,8 @@
 
 ;; Better debugging
 (package! dape)
+
+;; Babel compile mermaid
+(package! ob-mermaid)
+;; Mermaid syntax highlight
+(package! mermaid-mode)
