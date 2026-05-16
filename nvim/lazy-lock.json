@@ -1,6 +1,6 @@
 {
   "Comment.nvim": { "branch": "master", "commit": "e30b7f2008e52442154b66f7c519bfd2f1e32acb" },
-  "agentic.nvim": { "branch": "main", "commit": "746c1cfbc2c8c4828a19230b1e6e16ca71a6d9f1" },
+  "agentic.nvim": { "branch": "main", "commit": "f61fb1095e69d59034fded648a7c52672a4549ed" },
   "avante.nvim": { "branch": "main", "commit": "22418bff8bcac4377ebf975cd48f716823867979" },
   "bamboo.nvim": { "branch": "master", "commit": "1309bc88bffcf1bedc3e84e7fa9004de93da774a" },
   "blink.cmp": { "branch": "main", "commit": "78336bc89ee5365633bcf754d93df01678b5c08f" },
@@ -22,7 +22,7 @@
   "mason-tool-installer.nvim": { "branch": "main", "commit": "443f1ef8b5e6bf47045cb2217b6f748a223cf7dc" },
   "mason.nvim": { "branch": "main", "commit": "8e921c2b68571e978db5d4d3fef9c9a7f8755473" },
   "mini.animate": { "branch": "main", "commit": "0365de8b69331c25d0d0d7573407a7dc7719e578" },
-  "mini.files": { "branch": "main", "commit": "f9f0ccbef0fd24eaddc8675accca83fa1f310c3f" },
+  "mini.files": { "branch": "main", "commit": "5e0f0d264166e71d37ca35d84c54b1887ea76b40" },
   "mini.icons": { "branch": "main", "commit": "9c7b1b90b15bdd69c52f6e31889dbc9987c30ec4" },
   "mini.surround": { "branch": "main", "commit": "88c52297ed3e69ecf9f8652837888ecc727a28ee" },
   "nvim-autopairs": { "branch": "master", "commit": "7b9923abad60b903ece7c52940e1321d39eccc79" },
