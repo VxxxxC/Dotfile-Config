@@ -56,9 +56,7 @@
 
 ;; Theme
 (package! catppuccin-theme)
-
-;; Better debugging
-(package! dape)
+(package! snazzy-theme)
 
 ;; Babel compile mermaid
 (package! ob-mermaid)
