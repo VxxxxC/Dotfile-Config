@@ -40,7 +40,7 @@ export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 
 # nvm
 . ~/.config/fish/conf.d/nvm.fish
-nvm use 23
+nvm use 24
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
