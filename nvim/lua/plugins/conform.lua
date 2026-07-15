@@ -24,6 +24,8 @@ return {
         yaml = { "yamlfmt" },
         toml = { "taplo" },
         solidity = { "forge_fmt" },
+        java = { "google-java-format" },
+        kotlin = { "ktfmt" },
 
         -- For filetypes without a formatter:
         ["_"] = { "trim_whitespace", "trim_newlines" },

@@ -16,10 +16,9 @@ return {
 
     config = function()
       require("bamboo").setup({
-        style = "multiplex",
-        toggle_style_list = { "multiplex" },
-        transparent = true,
-        term_colors = true,
+        style = "vulgaris",
+        transparent = false,
+        term_colors = false,
         dim_inactive = true,
 
         code_style = {
@@ -28,7 +27,13 @@ return {
         },
 
         lualine = {
-          transparent = true,
+          transparent = false,
+        },
+
+        diagnostics = {
+          darker = true,
+          undercurl = true,
+          background = true,
         },
       })
       require("bamboo").load()
@@ -38,4 +43,16 @@ return {
       vim.cmd("colorscheme bamboo")
     end,
   },
+  -- {
+  --   "neanias/everforest-nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require("everforest").setup({})
+  --   end,
+  --   init = function()
+  --     vim.g.colors_name = "everforest"
+  --     vim.cmd("colorscheme everforest")
+  --   end,
+  -- },
 }
