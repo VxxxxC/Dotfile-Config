@@ -1,0 +1,34 @@
+.DS_Store
+iterm2
+exercism
+joplin-desktop
+flutter
+jgit
+github-copilot
+
+# ignore gh folder
+gh
+
+# ignore any .env files
+*.env
+
+# Zed
+zed/
+
+# Htop
+htop
+
+# Solidity
+aderyn/
+
+# Solana
+solana/
+
+# Google Cloud
+gcloud/
+
+#opencode
+opencode/
+
+# Herdr
+herdr/

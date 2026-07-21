@@ -55,7 +55,7 @@ TPM_DIR    := $(TMUX_DIR)/plugins/tpm
         fonts cli-tools formatters \
         clean help
 
-all: check-os install-pkg-manager cli-tools fonts \
+all: check-os install-pkg-manager symlinks cli-tools fonts \
      neovim tmux fish yazi \
      macos-wm-tools
 	@echo ""
@@ -118,6 +118,15 @@ else ifeq ($(OS),windows)
 		scoop bucket add nerd-fonts; \
 	fi
 endif
+
+# ============================================================================
+#  Symlinks Setup
+# ============================================================================
+
+symlinks:
+	@echo "🔗 Creating symlinks..."
+	@ln -sf $(CONFIG_DIR)/tmux/tmux.conf $(HOME)/.tmux.conf 2>/dev/null || true
+	@echo "  Symlinks created"
 
 # ============================================================================
 #  Shared CLI Tools
@@ -212,7 +221,6 @@ endif
 fonts:
 	@echo "🔤 Installing fonts..."
 ifeq ($(OS),macos)
-	brew tap homebrew/cask-fonts 2>/dev/null || true
 	brew install --cask font-hack-nerd-font font-symbols-only-nerd-font 2>/dev/null || true
 	# sketchybar-app-font
 	@if [ ! -f "$(HOME)/Library/Fonts/sketchybar-app-font.ttf" ]; then \
@@ -280,7 +288,9 @@ neovim-mason:
 		html-lsp \
 		yaml-language-server \
 		rust-analyzer \
-		solidity-ls" \
+		solidity-ls \
+		google-java-format \
+		ktfmt" \
 		-c "sleep 30" -c "qa" 2>/dev/null || true
 	@# Mason DAP adapters
 	nvim --headless -c "MasonInstall \
@@ -307,7 +317,7 @@ neovim-treesitter:
 formatters:
 	@echo "📦 Installing formatters for Neovim (conform.nvim)..."
 ifeq ($(OS),macos)
-	brew install stylua shfmt yamlfmt taplo dprint
+	brew install stylua shfmt yamlfmt taplo dprint google-java-format ktfmt
 	npm install -g @fsouza/prettierd 2>/dev/null || npm install -g prettierd
 	@# Foundry (forge_fmt for Solidity)
 	@if ! command -v forge >/dev/null 2>&1; then \
@@ -418,14 +428,8 @@ fish-plugins:
 	@echo "📦 Installing Fisher (Fish plugin manager)..."
 	@if command -v fish >/dev/null 2>&1; then \
 		fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher" 2>/dev/null || true; \
-		echo "📦 Installing Fisher plugins..."; \
-		fish -c "fisher install jorgebucaran/fisher" 2>/dev/null || true; \
-		fish -c "fisher install andreiborisov/sponge" 2>/dev/null || true; \
-		fish -c "fisher install jorgebucaran/autopair.fish" 2>/dev/null || true; \
-		fish -c "fisher install jorgebucaran/nvm.fish" 2>/dev/null || true; \
-		fish -c "fisher install gazorby/fish-exa" 2>/dev/null || true; \
-		fish -c "fisher install jethrokuan/z" 2>/dev/null || true; \
-		fish -c "fisher install berk-karaal/loadenv.fish" 2>/dev/null || true; \
+		echo "📦 Installing Fisher plugins via fisher update..."; \
+		fish -c "fisher update" 2>/dev/null || true; \
 	else \
 		echo "[WARN] Fish not found, skipping Fisher plugins"; \
 	fi
@@ -501,18 +505,18 @@ yazi: yazi-install yazi-plugins
 	@echo "✅ Yazi setup complete"
 
 yazi-install:
-	@echo "📦 Installing yazi..."
+	@echo "📦 Installing yazi and preview dependencies..."
 ifeq ($(OS),macos)
-	brew install yazi ffmpeg mediainfo
+	brew install yazi ffmpeg mediainfo ffmpegthumbnailer 7zip poppler imagemagick zoxide
 else ifeq ($(OS),linux)
 	@# yazi from cargo if not in apt
 	@if ! command -v yazi >/dev/null 2>&1; then \
 		cargo install --locked yazi-fm yazi-cli 2>/dev/null || \
 		echo "[WARN] Install yazi manually: https://yazi-rs.github.io/docs/installation"; \
 	fi
-	sudo apt-get install -y ffmpeg mediainfo 2>/dev/null || true
+	sudo apt-get install -y ffmpeg mediainfo ffmpegthumbnailer unar poppler-utils imagemagick zoxide 2>/dev/null || true
 else ifeq ($(OS),windows)
-	choco install -y ffmpeg mediainfo
+	choco install -y ffmpeg mediainfo ffmpegthumbnailer 7zip poppler imagemagick zoxide
 	@# yazi
 	@if ! command -v yazi >/dev/null 2>&1; then \
 		cargo install --locked yazi-fm yazi-cli 2>/dev/null || \
