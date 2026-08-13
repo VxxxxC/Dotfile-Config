@@ -5,6 +5,7 @@ joplin-desktop
 flutter
 jgit
 github-copilot
+karabiner
 
 # ignore gh folder
 gh
@@ -32,3 +33,6 @@ opencode/
 
 # Herdr
 herdr/
+
+# Stripe
+stripe
