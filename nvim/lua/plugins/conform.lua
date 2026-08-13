@@ -7,6 +7,7 @@ return {
       notify_on_error = true,
       notify_no_formatters = true,
       formatters_by_ft = {
+        python = { "ruff_format" },
         javascript = { "prettierd", name = "dprint", timeout_ms = 500, lsp_format = "fallback" },
         javascriptreact = { "prettierd", name = "dprint", timeout_ms = 500, lsp_format = "fallback" },
         json = { "prettierd", name = "dprint", timeout_ms = 500, lsp_format = "fallback" },
