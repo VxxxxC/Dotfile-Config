@@ -101,6 +101,12 @@
 (setq org-babel-default-header-args:mermaid
       '((:dir . "~/Documents/Obsidian Vault/Emacs Org File/mermaid-diagram/")))
 
+;; 打開 Org file 嗰陣自動顯示內聯圖片 (Inline Images)
+(setq org-startup-with-inline-images t)
+
+;; 限制預覽圖嘅顯示寬度 (單位：像素)
+(setq org-image-actual-width '(250))
+
 ;; ==========================================
 ;; Dape (Debugger) - Rust 全自動路徑尋找設定
 ;; ==========================================
