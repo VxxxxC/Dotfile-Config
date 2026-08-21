@@ -81,5 +81,43 @@ return {
         desc = "Remote Flash",
       },
     },
+    -- INFO: Add to "which-key" for default normal usage with prefix "<leader>F"
+    init = function()
+      local wk = require("which-key")
+      local keys = {
+        {
+          "<leader>Fs",
+          function()
+            require("flash").jump({
+              remote_op = {
+                restore = false,
+                motion = true,
+              },
+            })
+          end,
+          desc = "Flash Jump",
+        },
+        {
+          "<leader>FS",
+          function()
+            require("flash").treesitter_search()
+          end,
+          desc = "Treesitter Flash",
+        },
+        {
+          "<leader>Fr",
+          function()
+            require("flash").remote({
+              remote_op = {
+                restore = true,
+                motion = true,
+              },
+            })
+          end,
+          desc = "Remote Flash",
+        },
+      }
+      wk.add(keys)
+    end,
   },
 }
