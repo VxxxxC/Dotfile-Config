@@ -4,7 +4,7 @@ return {
 
     opts = {
       -- Any ACP-compatible provider works. Built-in: "claude-agent-acp" | "gemini-acp" | "codex-acp" | "opencode-acp" | "cursor-acp" | "copilot-acp" | "auggie-acp" | "mistral-vibe-acp" | "cline-acp" | "goose-acp"
-      provider = "copilot-acp", -- setting the name here is all you need to get started
+      provider = "opencode-acp", -- setting the name here is all you need to get started
       keymaps = {
         widget = {
           switch_model = "<localLeader>m", -- NOTE: Switch AI model [ <locaLeader> === "\" ]
@@ -14,7 +14,7 @@ return {
     init = function()
       local wk = require("which-key")
       wk.add({
-        { "<leader>c", group = "Github Copilot", icon = require("config.theme").icons.copilot },
+        { "<leader>c", group = "AI Agent", icon = require("config.theme").icons.copilot },
         {
           "<leader>cT",
           function()
