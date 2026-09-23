@@ -1,3 +1,7 @@
+# The following lines were added by Docker Desktop to add commands to your PATH.
+export PATH="$PATH:/Users/vxxxxc/.docker/bin"
+# End of Docker Desktop section.
+
 # Greeting prologue
 echo "Welcome to "(uname -a | awk '{print $1 " " $2 " " $3 " " $4 " " $12}')
 uptime
