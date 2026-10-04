@@ -20,16 +20,14 @@ alias pip pip3
 alias http curlie
 alias xcode "open -a Xcode"
 alias ports='lsof -n -i4TCP | grep LISTEN'
+alias l eza
 
 # below is fish-exa shortcut command
-if type -q ll
-    alias ll lli
-    alias lla llai
-end
 if type -q l
-    alias l li
-    alias la lai
-    alias l-tree lt
+    alias ll "l -l"
+    alias la "l -a"
+    alias lla "l -la"
+    alias lt "l --tree --level"
 end
 
 if type -q fzf
