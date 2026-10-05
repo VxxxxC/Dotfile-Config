@@ -21,6 +21,7 @@ alias http curlie
 alias xcode "open -a Xcode"
 alias ports='lsof -n -i4TCP | grep LISTEN'
 alias l eza
+alias reload-fish "source $HOME/.config/fish/config.fish"
 
 # below is fish-exa shortcut command
 if type -q l
