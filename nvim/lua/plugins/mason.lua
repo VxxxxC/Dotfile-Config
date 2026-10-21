@@ -18,6 +18,7 @@ return {
           "cssls",
           "html",
           "yamlls",
+          "gopls",
           "rust_analyzer",
           "solidity_ls",
         },

@@ -49,6 +49,7 @@ return {
             "cpp",
             "fish",
             "gitcommit",
+            "go",
             "graphql",
             "html",
             "java",
