@@ -41,6 +41,9 @@ export PATH="/Users/vxxxxc/.config/emacs/bin:$PATH"
 # LLVM - C++ / RUST compiler,debugger
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 
+# Golang global package binary path
+export PATH="$HOME/go/bin:$PATH"
+
 # nvm
 . ~/.config/fish/conf.d/nvm.fish
 nvm use 24
@@ -65,16 +68,6 @@ export PATH="/usr/local/lib/ruby/gems/2.7.0/bin:$PATH"
 #Andorid Studio SDK
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
-
-# Yazi shell wrapper
-function y
-    set tmp (mktemp -t "yazi-cwd.XXXXXX")
-    yazi $argv --cwd-file="$tmp"
-    if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
-        builtin cd -- "$cwd"
-    end
-    rm -f -- "$tmp"
-end
 
 # Export variables for docker ipfs image
 export ipfs_staging="/Users/vxxxxc/.ipfs/ipfs_staging/"
