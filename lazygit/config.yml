@@ -1,0 +1,14 @@
+customCommands:
+  - key: "C"
+    command: "commit"
+    description: "commit with commitizen"
+    context: "files"
+    loadingText: "opening commitizen commit tool"
+    output: terminal
+gui:
+  mouseEvents: false
+  scrollHeight: 30
+git:
+  autoFetch: false
+  diffRenderers:
+    - command: delta --dark --{{colorScheme}} --paging=never
