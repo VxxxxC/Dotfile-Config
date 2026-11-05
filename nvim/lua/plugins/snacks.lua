@@ -11,6 +11,7 @@ return {
     },
     picker = { enabled = true, hidden = true, ignored = true },
     quickfile = { enabled = true },
+    lazygit = { enabled = true },
   },
 
   init = function()
@@ -60,9 +61,23 @@ return {
       {
         "<leader>gg",
         function()
-          Snacks.lazygit()
+          Snacks.lazygit.open()
         end,
         desc = "Lazygit",
+      },
+      {
+        "<leader>gL",
+        function()
+          Snacks.lazygit.log()
+        end,
+        desc = "git log",
+      },
+      {
+        "<leader>gl",
+        function()
+          Snacks.lazygit.log()
+        end,
+        desc = "current file git log",
       },
       {
         "<leader>b",
