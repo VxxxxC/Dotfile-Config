@@ -29,6 +29,11 @@ return {
 
       require("mason-lspconfig").setup({
         ensure_installed = ensure_installed,
+        -- rust-analyzer is started by rustaceanvim; enabling it here too would
+        -- attach a second, conflicting client (see :h rustaceanvim.mason).
+        automatic_enable = {
+          exclude = { "rust_analyzer" },
+        },
       })
     end,
   },

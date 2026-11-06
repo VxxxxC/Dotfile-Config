@@ -26,7 +26,8 @@ return {
         less = { "prettierd" },
         lua = { "stylua" },
         markdown = { "prettierd" },
-        rust = { name = "rust_analyzer", timeout_ms = 500, lsp_format = "prefer" },
+        -- rustaceanvim's LSP client is named "rust-analyzer" (not lspconfig's "rust_analyzer")
+        rust = { name = "rust-analyzer", timeout_ms = 500, lsp_format = "prefer" },
         scss = { "prettierd" },
         sh = { "shfmt" },
         bash = { "shfmt" },

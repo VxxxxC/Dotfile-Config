@@ -1,6 +1,7 @@
 return {
   {
     "mrcjkb/rustaceanvim",
+    -- rustaceanvim lazy-loads itself via ftplugin; don't let lazy.nvim lazy-load it.
     lazy = false,
     version = "^9",
     dependencies = {
@@ -8,15 +9,24 @@ return {
       "nvim-lua/plenary.nvim",
       "mfussenegger/nvim-dap",
     },
-    ft = { "rust" },
-    config = function()
+    -- vim.g.rustaceanvim must be set before the rust ftplugin runs, so use `init`.
+    init = function()
+      -- Use lldb-dap from `brew install llvm` (same as dap.adapters.lldb in dap.lua).
+      -- If it isn't found, leave `adapter` unset so rustaceanvim auto-detects
+      -- (codelldb on PATH / Mason codelldb / lldb-dap).
+      local brew_lldb_dap = "/opt/homebrew/opt/llvm/bin/lldb-dap"
+      local lldb_dap = vim.fn.executable(brew_lldb_dap) == 1 and brew_lldb_dap or vim.fn.exepath("lldb-dap")
+
       vim.g.rustaceanvim = {
         -- Plugin configuration
         tools = {},
         -- LSP configuration
+        -- NOTE: mason-lspconfig must not enable rust_analyzer (see mason.lua)
         server = {},
         -- DAP configuration
-        dap = {},
+        dap = {
+          adapter = lldb_dap ~= "" and { type = "executable", command = lldb_dap, name = "lldb" } or nil,
+        },
       }
     end,
   },
@@ -26,12 +36,5 @@ return {
     opts = {},
     ft = "toml",
     lazy = true,
-  },
-  {
-    "rust-lang/rust.vim",
-    ft = { "rust" },
-    init = function()
-      vim.g.rustfmt_autosave = 1
-    end,
   },
 }
