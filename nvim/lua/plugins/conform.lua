@@ -1,4 +1,15 @@
 -- INFO: Code Formatting.
+
+--- Use a language-SDK formatter only when it is installed (SDKs are installed
+--- manually per project), otherwise fall back to the LSP without warning on every save.
+---@param formatter string
+local function if_available(formatter)
+  return function(bufnr)
+    local available = require("conform").get_formatter_info(formatter, bufnr).available
+    return { available and formatter or nil, lsp_format = "fallback" }
+  end
+end
+
 return {
   {
     "stevearc/conform.nvim",
@@ -7,7 +18,7 @@ return {
       notify_on_error = true,
       notify_no_formatters = true,
       formatters_by_ft = {
-        python = { "ruff_format" },
+        python = if_available("ruff_format"),
         javascript = { "prettierd", name = "dprint", timeout_ms = 500, lsp_format = "fallback" },
         javascriptreact = { "prettierd", name = "dprint", timeout_ms = 500, lsp_format = "fallback" },
         json = { "prettierd", name = "dprint", timeout_ms = 500, lsp_format = "fallback" },
@@ -24,9 +35,9 @@ return {
         svelte = { "prettierd", name = "dprint", timeout_ms = 500, lsp_format = "fallback" },
         yaml = { "yamlfmt" },
         toml = { "taplo" },
-        solidity = { "forge_fmt" },
-        java = { "google-java-format" },
-        kotlin = { "ktfmt" },
+        solidity = if_available("forge_fmt"),
+        java = if_available("google-java-format"),
+        kotlin = if_available("ktfmt"),
 
         -- For filetypes without a formatter:
         ["_"] = { "trim_whitespace", "trim_newlines" },
@@ -45,7 +56,7 @@ return {
 
         return {
           lsp_format = "fallback",
-          timtout_ms = 500,
+          timeout_ms = 500,
         }
       end,
       formatters = {

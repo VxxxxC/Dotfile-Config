@@ -7,7 +7,6 @@
 - **Tmux** — terminal multiplexer + TPM plugins
 - **Fish Shell** — shell + Fisher + Oh My Fish
 - **Node.js** — managed by [nvm.fish](https://github.com/jorgebucaran/nvm.fish) (needed by Mason LSPs/formatters and `czg`)
-- **Helix** — secondary editor
 - **SketchyBar** — macOS status bar _(macOS only)_
 - **yabai + skhd** — tiling window manager + hotkey daemon _(macOS only)_
 - [Installation](#installation) — one-command bootstrap via `Makefile`
@@ -25,9 +24,8 @@ make cli-tools       # git, ripgrep, fd, fzf, jq, eza, lazygit, delta, curlie, o
 make fonts           # Nerd Fonts (Hack + Symbols Only)
 make fish            # Fish + Fisher + OMF + plugins
 make node            # Node.js 24 via nvm.fish + czg (requires fish)
-make neovim          # Neovim >= 0.12 + lazy.nvim + Mason (LSPs/DAPs/formatters) + Treesitter
+make neovim          # Neovim >= 0.12 + tree-sitter CLI + LLVM (lldb-dap) + lazy.nvim + Mason + Treesitter
 make tmux            # tmux + TPM + plugins
-make helix           # Helix editor
 make macos-wm-tools  # sketchybar + skhd + yabai (macOS only)
 make sketchybar      # SketchyBar + SF Pro / SF Symbols / sketchybar-app-font (macOS only)
 make yabai           # yabai (macOS only)
@@ -48,6 +46,7 @@ make help
   `fish/config.fish` skips their init lines when they are not installed.
 - **Karabiner-Elements** — download from https://karabiner-elements.pqrs.org/
 - **Doom Emacs** — follow https://github.com/doomemacs/doomemacs#install
+- **Helix** — `brew install helix` (config in `helix/`)
 
 ---
 
@@ -65,7 +64,7 @@ make help
 ├── sketchybar/         # SketchyBar items & plugins (macOS)
 ├── skhd/               # skhd hotkey config (macOS)
 ├── yabai/              # yabai tiling WM (macOS)
-├── helix/              # Helix editor
+├── helix/              # Helix editor (manual install)
 ├── lazygit/            # lazygit (delta pager)
 ├── karabiner/          # Karabiner-Elements (manual install)
 ├── doom/               # Doom Emacs (manual install)

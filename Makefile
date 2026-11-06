@@ -25,6 +25,11 @@ TPM_DIR    := $(TMUX_DIR)/plugins/tpm
 NODE_VERSION     := 24
 NVIM_MIN_VERSION := 0.12
 
+# Treesitter parsers (keep in sync with nvim/lua/plugins/treesitter.lua)
+TS_PARSERS := bash c cpp fish gitcommit go graphql html java javascript \
+              json json5 jsonc lua markdown markdown_inline python \
+              query rasi regex rust scss toml tsx typescript vim vimdoc yaml solidity
+
 # Run a command with nvm.fish's Node on PATH (without loading config.fish).
 # Windows has no fish, so Node comes from choco and commands run directly.
 ifneq ($(OS),windows)
@@ -44,12 +49,11 @@ NVIM_VERSION_OK = v=$$(nvim --version 2>/dev/null | head -1 | sed -nE 's/^NVIM v
         neovim neovim-deps neovim-plugins neovim-mason neovim-treesitter \
         tmux tmux-install tmux-plugins \
         fish fish-install fish-plugins omf \
-        helix \
         macos-wm-tools sketchybar skhd yabai \
         clean
 
 all: check-os install-pkg-manager symlinks cli-tools fonts \
-     fish node neovim tmux helix \
+     fish node neovim tmux \
      macos-wm-tools
 	@echo ""
 	@echo "============================================"
@@ -67,7 +71,6 @@ help:
 	@echo "  node             - Install Node.js $(NODE_VERSION) via nvm.fish + czg"
 	@echo "  neovim           - Install Neovim >= $(NVIM_MIN_VERSION) + plugins + LSPs + formatters"
 	@echo "  tmux             - Install tmux + TPM + plugins"
-	@echo "  helix            - Install Helix editor"
 	@echo "  macos-wm-tools   - Install sketchybar + skhd + yabai (macOS only)"
 	@echo "  sketchybar       - Install SketchyBar + its fonts (macOS only)"
 	@echo "  skhd             - Install skhd (macOS only)"
@@ -215,10 +218,13 @@ endif
 neovim: neovim-deps node neovim-plugins neovim-mason neovim-treesitter
 	@echo "✅ Neovim setup complete"
 
+# Extra Neovim deps:
+#   tree-sitter-cli — builds parsers for nvim-treesitter (main branch), plus a C compiler
+#   llvm / lldb     — provides lldb-dap, the Rust / C / C++ debug adapter for nvim-dap
 neovim-deps:
 	@echo "📦 Installing Neovim (>= $(NVIM_MIN_VERSION))..."
 ifeq ($(OS),macos)
-	brew install neovim luarocks
+	brew install neovim luarocks tree-sitter-cli llvm
 else ifeq ($(OS),linux)
 	@# apt's Neovim is usually too old — install the latest GitHub release instead
 	@if ! { $(NVIM_VERSION_OK); }; then \
@@ -229,9 +235,17 @@ else ifeq ($(OS),linux)
 		sudo ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim; \
 		rm -f /tmp/nvim-linux-x86_64.tar.gz; \
 	fi
-	sudo apt-get install -y luarocks
+	sudo apt-get install -y luarocks lldb
+	@# tree-sitter CLI (apt's version is too old for nvim-treesitter main)
+	@if ! command -v tree-sitter >/dev/null 2>&1; then \
+		echo "📦 Installing tree-sitter CLI from GitHub releases..."; \
+		curl -fLo /tmp/tree-sitter.gz https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-x64.gz; \
+		gunzip -f /tmp/tree-sitter.gz; \
+		sudo install /tmp/tree-sitter /usr/local/bin/tree-sitter; \
+	fi
 else ifeq ($(OS),windows)
-	choco install -y neovim luarocks
+	choco install -y neovim luarocks llvm
+	@command -v tree-sitter >/dev/null 2>&1 || echo "[WARN] Install tree-sitter CLI manually: https://github.com/tree-sitter/tree-sitter/releases"
 endif
 	@if $(NVIM_VERSION_OK); then \
 		echo "  Neovim $$v ✔ (>= $(NVIM_MIN_VERSION))"; \
@@ -279,12 +293,9 @@ neovim-mason:
 
 neovim-treesitter:
 	@echo "📦 Installing Treesitter parsers..."
-	nvim --headless -c "TSInstallSync \
-		bash c cpp fish gitcommit go graphql html java javascript \
-		json json5 jsonc lua markdown markdown_inline python \
-		query rasi regex rust scss toml tsx typescript vim vimdoc yaml solidity" \
-		-c "qa" 2>/dev/null || \
-	nvim --headless -c "TSUpdate" -c "sleep 20" -c "qa" 2>/dev/null || true
+	@# nvim-treesitter main branch: install() is async, so wait (max 5 min) before quitting
+	nvim --headless -c "lua require('nvim-treesitter').install(vim.split('$(TS_PARSERS)', ' ', { trimempty = true })):wait(300000)" \
+		-c "qa" 2>/dev/null || true
 	@echo "  Treesitter parsers installed"
 
 # ============================================================================
@@ -373,24 +384,6 @@ omf:
 	else \
 		echo "[WARN] Fish not found, skipping OMF"; \
 	fi
-
-# ============================================================================
-#  Helix (fish alias: h)
-# ============================================================================
-
-helix:
-	@echo "📦 Installing Helix editor..."
-ifeq ($(OS),macos)
-	brew install helix
-else ifeq ($(OS),linux)
-	@if ! command -v hx >/dev/null 2>&1; then \
-		sudo add-apt-repository -y ppa:maveonair/helix-editor 2>/dev/null || true; \
-		sudo apt-get update; \
-		sudo apt-get install -y helix; \
-	fi
-else ifeq ($(OS),windows)
-	choco install -y helix
-endif
 
 # ============================================================================
 #  macOS Window Management (sketchybar + skhd + yabai)

@@ -26,10 +26,12 @@ return {
         dapui.close()
       end
 
-      -- INFO: Manual set Rust debugger adapter
+      -- INFO: Rust / C / C++ debugger adapter via lldb-dap (`brew install llvm`)
+      -- https://codeberg.org/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#c-c-rust-via-lldb-vscode
+      local brew_lldb_dap = "/opt/homebrew/opt/llvm/bin/lldb-dap"
       dap.adapters.lldb = {
         type = "executable",
-        command = "/usr/bin/lldb",
+        command = vim.fn.executable(brew_lldb_dap) == 1 and brew_lldb_dap or "lldb-dap",
         name = "lldb",
       }
     end,

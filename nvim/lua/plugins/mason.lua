@@ -8,20 +8,27 @@ return {
     "mason-org/mason-lspconfig.nvim",
     lazy = false,
     config = function()
+      local ensure_installed = {
+        "bashls",
+        "lua_ls",
+        "ts_ls",
+        "eslint",
+        "tailwindcss",
+        "cssls",
+        "html",
+        "yamlls",
+        "rust_analyzer",
+        "solidity_ls",
+      }
+
+      -- gopls is built with `go install`, so only install it when Go is available
+      -- (language SDKs are installed manually, not by the Makefile).
+      if vim.fn.executable("go") == 1 then
+        table.insert(ensure_installed, "gopls")
+      end
+
       require("mason-lspconfig").setup({
-        ensure_installed = {
-          "bashls",
-          "lua_ls",
-          "ts_ls",
-          "eslint",
-          "tailwindcss",
-          "cssls",
-          "html",
-          "yamlls",
-          "gopls",
-          "rust_analyzer",
-          "solidity_ls",
-        },
+        ensure_installed = ensure_installed,
       })
     end,
   },
