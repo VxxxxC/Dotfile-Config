@@ -7,7 +7,9 @@ echo "Welcome to "(uname -a | awk '{print $1 " " $2 " " $3 " " $4 " " $12}')
 uptime
 
 #This is oh-my-posh theme init when starting up fish shell
-eval "$(oh-my-posh init fish --config $(brew --prefix oh-my-posh)/themes/kushal.omp.json)"
+if type -q oh-my-posh; and type -q brew
+    eval "$(oh-my-posh init fish --config $(brew --prefix oh-my-posh)/themes/kushal.omp.json)"
+end
 
 # map alias for cli
 alias v nvim
@@ -44,9 +46,10 @@ export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 # Golang global package binary path
 export PATH="$HOME/go/bin:$PATH"
 
-# nvm
-. ~/.config/fish/conf.d/nvm.fish
-nvm use 24
+# nvm (nvm.fish via Fisher; conf.d is auto-sourced). Silent if Node 24 is not installed.
+if type -q nvm
+    nvm use --silent 24 2>/dev/null
+end
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -57,7 +60,9 @@ export CRE_INSTALL="$HOME/.cre"
 export PATH="$CRE_INSTALL/bin:$PATH"
 
 #Ruby version manage
-eval "$(rbenv init -)"
+if type -q rbenv
+    rbenv init - fish | source
+end
 export PATH="$HOME/.rbenv/bin:$PATH"
 
 # Export rubygems path
@@ -81,11 +86,15 @@ export PATH="/Users/vxxxxc/.antigravity/antigravity/bin:$PATH"
 
 # change Python version on local project by pyenv
 export PATH="/Users/vxxxxc/.pyenv/shims:$PATH"
-eval "$(pyenv init --path)"
+if type -q pyenv
+    pyenv init --path fish | source
+end
 
 # Created by `pipx` on 2025-01-08 15:26:21
 set PATH $PATH /Users/vxxxxc/.local/bin
 
+# NOTE: wrapped in a guard so a missing Anaconda does not break shell startup
+if test -d /Users/vxxxxc/.anaconda3
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 if test -f /Users/vxxxxc/.anaconda3/bin/conda
@@ -98,4 +107,5 @@ else
     end
 end
 # <<< conda initialize <<<
-eval conda deactivate
+conda deactivate
+end

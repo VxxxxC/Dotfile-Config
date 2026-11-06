@@ -14,26 +14,6 @@ else
     OS := windows
 endif
 
-# --- Package Manager Commands ---
-ifeq ($(OS),macos)
-    INSTALL      := brew install
-    CASK_INSTALL := brew install --cask
-    TAP          := brew tap
-    PKG_UPDATE   := brew update
-    HAS_PKG      := command -v brew >/dev/null 2>&1
-    FONT_INSTALL := brew install --cask font-sf-pro font-hack-nerd-font font-symbols-only-nerd-font
-else ifeq ($(OS),linux)
-    INSTALL      := sudo apt-get install -y
-    PKG_UPDATE   := sudo apt-get update
-    HAS_PKG      := command -v apt-get >/dev/null 2>&1
-    FONT_INSTALL := @echo "[INFO] Install Nerd Fonts manually: https://www.nerdfonts.com/font-downloads"
-else ifeq ($(OS),windows)
-    INSTALL      := choco install -y
-    PKG_UPDATE   := @echo "[INFO] Update packages via choco/scoop manually"
-    HAS_PKG      := command -v choco >/dev/null 2>&1
-    FONT_INSTALL := choco install -y nerd-fonts-hack
-endif
-
 SHELL := /bin/bash
 .DEFAULT_GOAL := all
 
@@ -41,22 +21,35 @@ CONFIG_DIR := $(HOME)/.config
 TMUX_DIR   := $(HOME)/.tmux
 TPM_DIR    := $(TMUX_DIR)/plugins/tpm
 
+# --- Versions ---
+NODE_VERSION     := 24
+NVIM_MIN_VERSION := 0.12
+
+# Run a command with nvm.fish's Node on PATH (without loading config.fish).
+# Windows has no fish, so Node comes from choco and commands run directly.
+ifneq ($(OS),windows)
+NVM_FISH = fish --no-config -c 'set -p fish_function_path $(CONFIG_DIR)/fish/functions; source $(CONFIG_DIR)/fish/conf.d/nvm.fish; nvm use --silent $(NODE_VERSION); and $$argv' --
+endif
+
+# Shell snippet: succeeds when the installed nvim >= NVIM_MIN_VERSION (sets $$v)
+NVIM_VERSION_OK = v=$$(nvim --version 2>/dev/null | head -1 | sed -nE 's/^NVIM v([0-9]+\.[0-9]+(\.[0-9]+)?).*/\1/p'); \
+	[ -n "$$v" ] && [ "$$(printf '%s\n' $(NVIM_MIN_VERSION) $$v | sort -V | head -1)" = "$(NVIM_MIN_VERSION)" ]
+
 # ============================================================================
 #  Main Targets
 # ============================================================================
 
-.PHONY: all check-os install-pkg-manager \
-        symlinks \
+.PHONY: all help check-os install-pkg-manager symlinks \
+        cli-tools fonts node \
         neovim neovim-deps neovim-plugins neovim-mason neovim-treesitter \
-        tmux tmux-plugins \
-        fish fish-plugins omf \
-        sketchybar skhd yabai \
-        yazi yazi-plugins \
-        fonts cli-tools formatters \
-        clean help
+        tmux tmux-install tmux-plugins \
+        fish fish-install fish-plugins omf \
+        helix \
+        macos-wm-tools sketchybar skhd yabai \
+        clean
 
 all: check-os install-pkg-manager symlinks cli-tools fonts \
-     neovim tmux fish yazi \
+     fish node neovim tmux helix \
      macos-wm-tools
 	@echo ""
 	@echo "============================================"
@@ -68,16 +61,17 @@ help:
 	@echo ""
 	@echo "Targets:"
 	@echo "  all              - Install everything (default)"
-	@echo "  neovim           - Install Neovim + plugins + LSPs + formatters"
-	@echo "  tmux             - Install tmux + TPM + plugins"
+	@echo "  cli-tools        - Install shared CLI tools (git, ripgrep, fzf, lazygit, delta, wezterm...)"
+	@echo "  fonts            - Install Nerd Fonts"
 	@echo "  fish             - Install Fish shell + Fisher + OMF + plugins"
-	@echo "  yazi             - Install yazi + plugins"
-	@echo "  sketchybar       - Install SketchyBar (macOS only)"
+	@echo "  node             - Install Node.js $(NODE_VERSION) via nvm.fish + czg"
+	@echo "  neovim           - Install Neovim >= $(NVIM_MIN_VERSION) + plugins + LSPs + formatters"
+	@echo "  tmux             - Install tmux + TPM + plugins"
+	@echo "  helix            - Install Helix editor"
+	@echo "  macos-wm-tools   - Install sketchybar + skhd + yabai (macOS only)"
+	@echo "  sketchybar       - Install SketchyBar + its fonts (macOS only)"
 	@echo "  skhd             - Install skhd (macOS only)"
 	@echo "  yabai            - Install yabai (macOS only)"
-	@echo "  cli-tools        - Install shared CLI dependencies"
-	@echo "  fonts            - Install required fonts"
-	@echo "  formatters       - Install code formatters for Neovim"
 	@echo "  clean            - Remove plugin caches"
 	@echo "  help             - Show this help"
 	@echo ""
@@ -132,32 +126,26 @@ symlinks:
 #  Shared CLI Tools
 # ============================================================================
 
+# NOTE: Language runtimes / SDKs (python, rust, go, java, ruby, bun, solidity...)
+#       are intentionally NOT installed here — install them manually per project.
+#       Node is installed separately by the `node` target (nvm.fish).
 cli-tools:
 	@echo "🔧 Installing CLI dependencies..."
 ifeq ($(OS),macos)
-	brew install git curl wget unzip gcc make cmake \
-		ripgrep fd fzf jq eza lazygit \
-		node python3 pyenv rbenv \
-		curlie pipx oh-my-posh \
-		luarocks go rust
-	# bun
-	@if ! command -v bun >/dev/null 2>&1; then \
-		curl -fsSL https://bun.sh/install | bash; \
-	fi
+	brew install git curl wget unzip \
+		ripgrep fd fzf jq eza lazygit git-delta \
+		curlie oh-my-posh
+	brew install --cask wezterm
 else ifeq ($(OS),linux)
-	sudo apt-get install -y git curl wget unzip build-essential cmake \
-		ripgrep fd-find fzf jq \
-		python3 python3-pip python3-venv \
-		luarocks golang cargo
+	sudo apt-get install -y git curl wget unzip build-essential \
+		ripgrep fd-find fzf jq
 	# fd is fd-find on Debian/Ubuntu, create symlink
 	@if ! command -v fd >/dev/null 2>&1 && command -v fdfind >/dev/null 2>&1; then \
 		sudo ln -sf $$(which fdfind) /usr/local/bin/fd; \
 	fi
-	# eza (not in default apt on older distros)
-	@if ! command -v eza >/dev/null 2>&1; then \
-		echo "📦 Installing eza..."; \
-		cargo install eza 2>/dev/null || echo "[WARN] Install eza manually: https://github.com/eza-community/eza"; \
-	fi
+	# eza / git-delta (not in default apt on older distros)
+	sudo apt-get install -y eza 2>/dev/null || echo "[WARN] Install eza manually: https://github.com/eza-community/eza"
+	sudo apt-get install -y git-delta 2>/dev/null || echo "[WARN] Install delta manually: https://github.com/dandavison/delta"
 	# lazygit
 	@if ! command -v lazygit >/dev/null 2>&1; then \
 		echo "📦 Installing lazygit..."; \
@@ -166,48 +154,16 @@ else ifeq ($(OS),linux)
 		tar xf /tmp/lazygit.tar.gz -C /tmp lazygit; \
 		sudo install /tmp/lazygit /usr/local/bin; \
 	fi
-	# Node.js via nvm
-	@if ! command -v node >/dev/null 2>&1; then \
-		echo "📦 Installing Node.js via nvm..."; \
-		curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash; \
-		export NVM_DIR="$$HOME/.nvm"; \
-		[ -s "$$NVM_DIR/nvm.sh" ] && . "$$NVM_DIR/nvm.sh"; \
-		nvm install 23; \
-	fi
 	# oh-my-posh
 	@if ! command -v oh-my-posh >/dev/null 2>&1; then \
 		curl -s https://ohmyposh.dev/install.sh | bash -s; \
 	fi
-	# pipx
-	@if ! command -v pipx >/dev/null 2>&1; then \
-		python3 -m pip install --user pipx; \
-		python3 -m pipx ensurepath; \
-	fi
-	# bun
-	@if ! command -v bun >/dev/null 2>&1; then \
-		curl -fsSL https://bun.sh/install | bash; \
-	fi
 	# curlie
-	@if ! command -v curlie >/dev/null 2>&1; then \
-		go install github.com/rs/curlie@latest 2>/dev/null || echo "[WARN] Install curlie manually"; \
-	fi
-	# pyenv
-	@if ! command -v pyenv >/dev/null 2>&1; then \
-		curl https://pyenv.run | bash; \
-	fi
-	# rbenv
-	@if ! command -v rbenv >/dev/null 2>&1; then \
-		curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash; \
-	fi
+	@command -v curlie >/dev/null 2>&1 || echo "[WARN] Install curlie manually: https://github.com/rs/curlie/releases"
 else ifeq ($(OS),windows)
-	choco install -y git curl wget unzip mingw cmake \
-		ripgrep fd fzf jq eza lazygit \
-		nodejs python3 golang rust \
-		luarocks
-	# bun
-	@if ! command -v bun >/dev/null 2>&1; then \
-		powershell -c "irm bun.sh/install.ps1 | iex" 2>/dev/null || echo "[WARN] Install bun manually: https://bun.sh"; \
-	fi
+	choco install -y git curl wget unzip mingw \
+		ripgrep fd fzf jq eza lazygit delta \
+		wezterm
 	# oh-my-posh
 	@if ! command -v oh-my-posh >/dev/null 2>&1; then \
 		choco install -y oh-my-posh; \
@@ -219,17 +175,9 @@ endif
 # ============================================================================
 
 fonts:
-	@echo "🔤 Installing fonts..."
+	@echo "🔤 Installing Nerd Fonts..."
 ifeq ($(OS),macos)
-	brew install --cask font-hack-nerd-font font-symbols-only-nerd-font 2>/dev/null || true
-	# sketchybar-app-font
-	@if [ ! -f "$(HOME)/Library/Fonts/sketchybar-app-font.ttf" ]; then \
-		echo "📦 Installing sketchybar-app-font..."; \
-		curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v2.0.28/sketchybar-app-font.ttf \
-			-o "$(HOME)/Library/Fonts/sketchybar-app-font.ttf" 2>/dev/null || true; \
-	fi
-	# SF Pro (from Apple, only available via macOS)
-	@echo "ℹ️  SF Pro: Install from https://developer.apple.com/fonts/ if not already present"
+	brew install --cask font-hack-nerd-font font-symbols-only-nerd-font
 else ifeq ($(OS),linux)
 	@mkdir -p $(HOME)/.local/share/fonts
 	@if ! fc-list | grep -qi "Hack Nerd"; then \
@@ -244,41 +192,64 @@ else ifeq ($(OS),windows)
 endif
 
 # ============================================================================
+#  Node.js (nvm.fish) — needed by Mason LSPs/formatters and czg
+# ============================================================================
+
+node:
+	@echo "📦 Installing Node.js $(NODE_VERSION)..."
+ifeq ($(OS),windows)
+	choco install -y nodejs
+	npm install -g czg
+else
+	@command -v fish >/dev/null 2>&1 || { echo "❌ fish not found, run 'make fish' first"; exit 1; }
+	@mkdir -p $(HOME)/.local/share/nvm
+	fish --no-config -c 'set -p fish_function_path $(CONFIG_DIR)/fish/functions; source $(CONFIG_DIR)/fish/conf.d/nvm.fish; nvm install $(NODE_VERSION)'
+	$(NVM_FISH) npm install -g czg
+	@echo "ℹ️  Switch versions any time: nvm install <ver> && nvm use <ver>"
+endif
+
+# ============================================================================
 #  Neovim
 # ============================================================================
 
-neovim: neovim-deps neovim-plugins neovim-mason neovim-treesitter formatters
+neovim: neovim-deps node neovim-plugins neovim-mason neovim-treesitter
 	@echo "✅ Neovim setup complete"
 
 neovim-deps:
-	@echo "📦 Installing Neovim..."
+	@echo "📦 Installing Neovim (>= $(NVIM_MIN_VERSION))..."
 ifeq ($(OS),macos)
 	brew install neovim luarocks
 else ifeq ($(OS),linux)
-	@# Install latest Neovim (apt version is often outdated)
-	@if ! command -v nvim >/dev/null 2>&1 || [ "$$(nvim --version | head -1 | grep -oP '\d+\.\d+')" \< "0.10" ]; then \
+	@# apt's Neovim is usually too old — install the latest GitHub release instead
+	@if ! { $(NVIM_VERSION_OK); }; then \
 		echo "📦 Installing latest Neovim from GitHub releases..."; \
-		curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz; \
-		sudo rm -rf /opt/nvim; \
-		sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz; \
+		curl -fLo /tmp/nvim-linux-x86_64.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz; \
+		sudo rm -rf /opt/nvim-linux-x86_64; \
+		sudo tar -C /opt -xzf /tmp/nvim-linux-x86_64.tar.gz; \
 		sudo ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim; \
-		rm -f nvim-linux-x86_64.tar.gz; \
+		rm -f /tmp/nvim-linux-x86_64.tar.gz; \
 	fi
 	sudo apt-get install -y luarocks
 else ifeq ($(OS),windows)
 	choco install -y neovim luarocks
 endif
+	@if $(NVIM_VERSION_OK); then \
+		echo "  Neovim $$v ✔ (>= $(NVIM_MIN_VERSION))"; \
+	else \
+		echo "❌ Neovim >= $(NVIM_MIN_VERSION) required, found: $$(nvim --version 2>/dev/null | head -1)"; \
+		exit 1; \
+	fi
 
 neovim-plugins:
 	@echo "📦 Bootstrapping lazy.nvim plugins (headless)..."
-	nvim --headless "+Lazy! sync" +qa 2>/dev/null || \
-		nvim --headless -c "lua require('config.lazy')" -c "sleep 30" -c "qa" 2>/dev/null || true
+	$(NVM_FISH) nvim --headless "+Lazy! sync" +qa 2>/dev/null || \
+		$(NVM_FISH) nvim --headless -c "lua require('config.lazy')" -c "sleep 30" -c "qa" 2>/dev/null || true
 	@echo "  lazy.nvim plugins synced"
 
 neovim-mason:
 	@echo "📦 Installing Mason LSP servers, DAPs, and tools..."
 	@# Mason ensure_installed LSP servers
-	nvim --headless -c "MasonInstall \
+	$(NVM_FISH) nvim --headless -c "MasonInstall \
 		bash-language-server \
 		lua-language-server \
 		typescript-language-server \
@@ -288,12 +259,18 @@ neovim-mason:
 		html-lsp \
 		yaml-language-server \
 		rust-analyzer \
-		solidity-ls \
-		google-java-format \
-		ktfmt" \
+		solidity-ls" \
+		-c "sleep 30" -c "qa" 2>/dev/null || true
+	@# Mason formatters (for conform.nvim)
+	$(NVM_FISH) nvim --headless -c "MasonInstall \
+		stylua \
+		shfmt \
+		prettierd \
+		yamlfmt \
+		taplo" \
 		-c "sleep 30" -c "qa" 2>/dev/null || true
 	@# Mason DAP adapters
-	nvim --headless -c "MasonInstall \
+	$(NVM_FISH) nvim --headless -c "MasonInstall \
 		bash-debug-adapter \
 		js-debug-adapter \
 		codelldb" \
@@ -303,63 +280,12 @@ neovim-mason:
 neovim-treesitter:
 	@echo "📦 Installing Treesitter parsers..."
 	nvim --headless -c "TSInstallSync \
-		bash c cpp fish gitcommit graphql html java javascript \
+		bash c cpp fish gitcommit go graphql html java javascript \
 		json json5 jsonc lua markdown markdown_inline python \
 		query rasi regex rust scss toml tsx typescript vim vimdoc yaml solidity" \
 		-c "qa" 2>/dev/null || \
 	nvim --headless -c "TSUpdate" -c "sleep 20" -c "qa" 2>/dev/null || true
 	@echo "  Treesitter parsers installed"
-
-# ============================================================================
-#  Formatters & Linters (for conform.nvim)
-# ============================================================================
-
-formatters:
-	@echo "📦 Installing formatters for Neovim (conform.nvim)..."
-ifeq ($(OS),macos)
-	brew install stylua shfmt yamlfmt taplo dprint google-java-format ktfmt
-	npm install -g @fsouza/prettierd 2>/dev/null || npm install -g prettierd
-	@# Foundry (forge_fmt for Solidity)
-	@if ! command -v forge >/dev/null 2>&1; then \
-		curl -L https://foundry.paradigm.xyz | bash; \
-		foundryup 2>/dev/null || true; \
-	fi
-else ifeq ($(OS),linux)
-	npm install -g @fsouza/prettierd 2>/dev/null || npm install -g prettierd
-	npm install -g dprint
-	@# stylua
-	@if ! command -v stylua >/dev/null 2>&1; then \
-		cargo install stylua; \
-	fi
-	@# shfmt
-	@if ! command -v shfmt >/dev/null 2>&1; then \
-		go install mvdan.cc/sh/v3/cmd/shfmt@latest; \
-	fi
-	@# yamlfmt
-	@if ! command -v yamlfmt >/dev/null 2>&1; then \
-		go install github.com/google/yamlfmt/cmd/yamlfmt@latest; \
-	fi
-	@# taplo
-	@if ! command -v taplo >/dev/null 2>&1; then \
-		cargo install taplo-cli; \
-	fi
-	@# Foundry
-	@if ! command -v forge >/dev/null 2>&1; then \
-		curl -L https://foundry.paradigm.xyz | bash; \
-		foundryup 2>/dev/null || true; \
-	fi
-else ifeq ($(OS),windows)
-	npm install -g @fsouza/prettierd dprint
-	choco install -y stylua shfmt
-	@# yamlfmt
-	go install github.com/google/yamlfmt/cmd/yamlfmt@latest 2>/dev/null || true
-	@# taplo
-	cargo install taplo-cli 2>/dev/null || true
-	@# Foundry
-	@if ! command -v forge >/dev/null 2>&1; then \
-		echo "[INFO] Install Foundry: https://book.getfoundry.sh/getting-started/installation"; \
-	fi
-endif
 
 # ============================================================================
 #  Tmux
@@ -449,6 +375,24 @@ omf:
 	fi
 
 # ============================================================================
+#  Helix (fish alias: h)
+# ============================================================================
+
+helix:
+	@echo "📦 Installing Helix editor..."
+ifeq ($(OS),macos)
+	brew install helix
+else ifeq ($(OS),linux)
+	@if ! command -v hx >/dev/null 2>&1; then \
+		sudo add-apt-repository -y ppa:maveonair/helix-editor 2>/dev/null || true; \
+		sudo apt-get update; \
+		sudo apt-get install -y helix; \
+	fi
+else ifeq ($(OS),windows)
+	choco install -y helix
+endif
+
+# ============================================================================
 #  macOS Window Management (sketchybar + skhd + yabai)
 # ============================================================================
 
@@ -465,9 +409,15 @@ ifneq ($(OS),macos)
 else
 	@echo "📦 Installing SketchyBar..."
 	brew tap FelixKratz/formulae
-	brew install sketchybar
-	brew install jq
-	brew install --cask sf-symbols 2>/dev/null || true
+	brew install sketchybar jq
+	@# Fonts used by sketchybarrc: SF Pro, SF Symbols, sketchybar-app-font
+	brew install --cask sf-symbols font-sf-pro
+	@# sketchybar-app-font is pinned to the version matching plugins/icon_map_fn.sh
+	@if [ ! -f "$(HOME)/Library/Fonts/sketchybar-app-font.ttf" ]; then \
+		echo "📦 Installing sketchybar-app-font..."; \
+		curl -fL https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v2.0.28/sketchybar-app-font.ttf \
+			-o "$(HOME)/Library/Fonts/sketchybar-app-font.ttf"; \
+	fi
 	@# Ensure sketchybar config scripts are executable
 	chmod +x $(CONFIG_DIR)/sketchybar/sketchybarrc 2>/dev/null || true
 	find $(CONFIG_DIR)/sketchybar -name "*.sh" -exec chmod +x {} \; 2>/dev/null || true
@@ -495,61 +445,6 @@ else
 	@echo "ℹ️  Start yabai: yabai --start-service"
 	@echo "ℹ️  Note: yabai requires accessibility permissions and SIP config for full features"
 	@echo "✅ yabai setup complete"
-endif
-
-# ============================================================================
-#  Yazi
-# ============================================================================
-
-yazi: yazi-install yazi-plugins
-	@echo "✅ Yazi setup complete"
-
-yazi-install:
-	@echo "📦 Installing yazi and preview dependencies..."
-ifeq ($(OS),macos)
-	brew install yazi ffmpeg mediainfo ffmpegthumbnailer 7zip poppler imagemagick zoxide
-else ifeq ($(OS),linux)
-	@# yazi from cargo if not in apt
-	@if ! command -v yazi >/dev/null 2>&1; then \
-		cargo install --locked yazi-fm yazi-cli 2>/dev/null || \
-		echo "[WARN] Install yazi manually: https://yazi-rs.github.io/docs/installation"; \
-	fi
-	sudo apt-get install -y ffmpeg mediainfo ffmpegthumbnailer unar poppler-utils imagemagick zoxide 2>/dev/null || true
-else ifeq ($(OS),windows)
-	choco install -y ffmpeg mediainfo ffmpegthumbnailer 7zip poppler imagemagick zoxide
-	@# yazi
-	@if ! command -v yazi >/dev/null 2>&1; then \
-		cargo install --locked yazi-fm yazi-cli 2>/dev/null || \
-		echo "[WARN] Install yazi: https://yazi-rs.github.io/docs/installation"; \
-	fi
-endif
-
-yazi-plugins:
-	@echo "📦 Installing yazi plugins via ya pack..."
-	@if command -v ya >/dev/null 2>&1; then \
-		ya pack -i 2>/dev/null || true; \
-	elif command -v yazi >/dev/null 2>&1; then \
-		echo "[INFO] Run 'ya pack -i' after yazi is available in PATH"; \
-	else \
-		echo "[WARN] yazi not found, skipping plugin install"; \
-	fi
-
-# ============================================================================
-#  Helix (referenced in fish alias)
-# ============================================================================
-
-helix:
-	@echo "📦 Installing Helix editor..."
-ifeq ($(OS),macos)
-	brew install helix
-else ifeq ($(OS),linux)
-	@if ! command -v hx >/dev/null 2>&1; then \
-		sudo add-apt-repository -y ppa:maveonair/helix-editor 2>/dev/null || true; \
-		sudo apt-get update; \
-		sudo apt-get install -y helix; \
-	fi
-else ifeq ($(OS),windows)
-	choco install -y helix
 endif
 
 # ============================================================================
