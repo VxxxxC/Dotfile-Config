@@ -27,7 +27,7 @@ NVIM_MIN_VERSION := 0.12
 
 # Treesitter parsers (keep in sync with nvim/lua/plugins/treesitter.lua)
 TS_PARSERS := bash c cpp fish gitcommit go graphql html java javascript \
-              json json5 jsonc lua markdown markdown_inline python \
+              json lua markdown markdown_inline python \
               query rasi regex rust scss toml tsx typescript vim vimdoc yaml solidity
 
 # Run a command with nvm.fish's Node on PATH (without loading config.fish).

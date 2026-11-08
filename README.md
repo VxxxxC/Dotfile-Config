@@ -20,25 +20,31 @@ Clone this repo to `~/.config`, then run:
 make            # same as: make all
 
 # Or install individual components:
-make cli-tools       # git, ripgrep, fd, fzf, jq, eza, lazygit, delta, curlie, oh-my-posh, WezTerm
-make fonts           # Nerd Fonts (Hack + Symbols Only)
+make cli-tools       # git, ripgrep, fd, fzf, jq, eza, lazygit, delta, curlie*, oh-my-posh, WezTerm*
+make fonts           # Nerd Fonts (Hack + Symbols Only*)
 make fish            # Fish + Fisher + OMF + plugins
 make node            # Node.js 24 via nvm.fish + czg (requires fish)
-make neovim          # Neovim >= 0.12 + tree-sitter CLI + LLVM (lldb-dap) + lazy.nvim + Mason + Treesitter
+make neovim          # Neovim >= 0.12 + luarocks + tree-sitter CLI + LLVM (lldb-dap) + lazy.nvim + Mason + Treesitter (requires fish, pulls in `node`)
 make tmux            # tmux + TPM + plugins
 make macos-wm-tools  # sketchybar + skhd + yabai (macOS only)
 make sketchybar      # SketchyBar + SF Pro / SF Symbols / sketchybar-app-font (macOS only)
 make yabai           # yabai (macOS only)
 make skhd            # skhd (macOS only)
+make clean           # Remove nvim lazy/state and tmux plugin caches
 
 # Show all targets:
 make help
 ```
 
 > **Order:** `make all` installs fish before node, and node before Neovim's Mason tools.  
+> **Fish dependency:** `make node` and `make neovim` run Node through nvm.fish, so fish must be installed first (except on Windows).  
 > **Node versions:** switch any time with `nvm install <ver>` / `nvm use <ver>`.  
-> **Windows:** sketchybar / yabai / skhd are automatically skipped; Node comes from choco (no fish).  
-> Fish shell on Windows requires WSL or MSYS2.
+> **Platform differences (\*):** WezTerm is installed on macOS / Windows only; curlie is installed on macOS only (Linux prints a manual-install hint);
+> the Symbols Only Nerd Font is installed on macOS only (Linux / Windows get Hack).  
+> **Linux:** assumes an apt-based distro (Debian / Ubuntu) on x86_64.  
+> **Windows:** [Chocolatey](https://chocolatey.org/install) must be installed first. sketchybar / yabai / skhd are automatically skipped;
+> Node comes from choco (no fish); the tree-sitter CLI must be installed manually.  
+> Fish shell and tmux on Windows require WSL or MSYS2.
 
 ### Manual installs (not handled by the Makefile)
 
@@ -61,6 +67,7 @@ make help
 │       └── plugins/    # one file per plugin
 ├── tmux/               # Tmux + TPM
 ├── fish/               # Fish shell + Fisher plugins (incl. nvm.fish)
+├── omf/                # Oh My Fish config
 ├── sketchybar/         # SketchyBar items & plugins (macOS)
 ├── skhd/               # skhd hotkey config (macOS)
 ├── yabai/              # yabai tiling WM (macOS)
