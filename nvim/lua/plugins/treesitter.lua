@@ -54,8 +54,8 @@ local function attach(buf, lang)
       vim.treesitter.select(target, vim.v.count1)
     end, { buffer = buf, desc = desc })
   end
-  map("n", "<Enter>", "parent", "Start treesitter selection")
-  map("x", "<Enter>", "parent", "Increment treesitter selection")
+  map("n", ";t", "parent", "Start treesitter selection")
+  map("x", ";t", "parent", "Increment treesitter selection")
   map("x", "<Backspace>", "child", "Decrement treesitter selection")
 end
 
