@@ -50,6 +50,7 @@ return {
         NOTE = { icon = " ", color = "info", alt = { "INFO" } },
         TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
         COL = { icon = " ", color = "default", alt = { "COLUMN" } },
+        QUES = { icon = " ", color = "todo", alt = { "QUESTION" } },
       },
 
       gui_style = {
